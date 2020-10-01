@@ -5,8 +5,99 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KYSQLhelper"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="SQLquery" Height="450" Width="800">
+
+    <StackPanel>
+
+        <!--Connection section-->
+        <TextBlock Text="Connection credentials" FontWeight="Bold" Margin="10 5"/>
+
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="34*"/>
+                    <ColumnDefinition Width="49*"/>
+                    <ColumnDefinition Width="49*"/>
+                    <ColumnDefinition Width="49*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Content="Ip adress" Margin="8 0 10 0" Grid.ColumnSpan="2"/>
+                <Label Grid.Column="2" Grid.Row="0" Content="User" Margin="8 0 10 0"/>
+                <Label Grid.Column="3" Grid.Row="0" Content="Password" Margin="8 0 10 0"/>
+
+                <TextBox Grid.Column="0" Grid.Row="1" Margin="10 0 10 0" Padding="2" Grid.ColumnSpan="2"/>
+                <TextBox Grid.Column="2" Grid.Row="1" Margin="10 0 10 0" Padding="2"/>
+                <TextBox Grid.Column="3" Grid.Row="1" Margin="10 0 10 0" Padding="2"/>
+
+                <Button Grid.Column="4" Grid.Row="1" Content="Connect" Margin="10 0 10 0" />
+            </Grid>
+
+        <TextBlock Text="Search Option" FontWeight="Bold" Margin="10 10"/>
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0" Content="What to Select"/>
+            <Label Grid.Column="1" Grid.Row="0" Content="WHERE"/>
+            <Label Grid.Column="2" Grid.Row="0" Content="What to Select"/>
+            <Label Grid.Column="3" Grid.Row="0" Content="SORT BY"/>
+
+
+            <ComboBox Grid.Column="0" Grid.Row="1" Margin="10 0 10 0" >
+                <ComboBoxItem Content="PCBID"></ComboBoxItem>
+                <ComboBoxItem Content="MachineID"></ComboBoxItem>
+                <ComboBoxItem Content="MachineIP"></ComboBoxItem>
+                <ComboBoxItem Content="JobGUID"></ComboBoxItem>
+                <ComboBoxItem Content="JobFileIDLocal"></ComboBoxItem>
+                <ComboBoxItem Content="JobFileIDShare"></ComboBoxItem>
+                <ComboBoxItem Content="JobFileShareDir"></ComboBoxItem>
+                <ComboBoxItem Content="Lot"></ComboBoxItem>
+                <ComboBoxItem Content="StartDateTime"></ComboBoxItem>
+                <ComboBoxItem Content="EndDateTime"></ComboBoxItem>
+                <ComboBoxItem Content="PCBResultBefore"></ComboBoxItem>
+                <ComboBoxItem Content="PCBResultAfter"></ComboBoxItem>
+                <ComboBoxItem Content="PCBRepair"></ComboBoxItem>
+                <ComboBoxItem Content="BarCode"></ComboBoxItem>
+                <ComboBoxItem Content="ALLBarCode"></ComboBoxItem>
+                <ComboBoxItem Content="PCBTotalComp"></ComboBoxItem>
+                <ComboBoxItem Content="PCBTotalInsp"></ComboBoxItem>
+                <ComboBoxItem Content="ArrayCnt"></ComboBoxItem>
+                <ComboBoxItem Content="SaveDone"></ComboBoxItem>
+                <ComboBoxItem Content="Checksum"></ComboBoxItem>
+                <ComboBoxItem Content="TB"></ComboBoxItem>
+                <ComboBoxItem Content="ResultDBName"></ComboBoxItem>
+                <ComboBoxItem Content="ImageDBName"></ComboBoxItem>
+                <ComboBoxItem Content="FieldVersion"></ComboBoxItem>
+                <ComboBoxItem Content="PCBComment"></ComboBoxItem>
+                <ComboBoxItem Content="PCBModel"></ComboBoxItem>
+                <ComboBoxItem Content="LotType"></ComboBoxItem>
+                <ComboBoxItem Content="ArrayCnt"></ComboBoxItem>
+                <ComboBoxItem Content="ArrayCnt"></ComboBoxItem>
+
+            </ComboBox>
+            <ComboBox Grid.Column="1" Grid.Row="1" Margin="10 0 10 0"/>
+            <ComboBox Grid.Column="2" Grid.Row="1" Margin="10 0 10 0"/>
+            <ComboBox Grid.Column="3" Grid.Row="1" Margin="10 0 10 0"/>
+
+        </Grid>
+
+    </StackPanel>
+
 </Window>

@@ -1,0 +1,15 @@
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\KYSQLhelper.exe.config
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\KYSQLhelper.exe
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\KYSQLhelper.pdb
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.csprojAssemblyReference.cache
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\MainWindow.g.cs
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\App.g.cs
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper_MarkupCompile.cache
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper_MarkupCompile.lref
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\MainWindow.baml
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.g.resources
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.Properties.Resources.resources
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.csproj.GenerateResource.cache
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.csproj.CoreCompileInputs.cache
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.exe
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.pdb
