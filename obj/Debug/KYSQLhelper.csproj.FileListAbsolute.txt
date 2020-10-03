@@ -13,3 +13,4 @@ C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.csproj.Ge
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.csproj.CoreCompileInputs.cache
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.exe
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.pdb
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\App.baml

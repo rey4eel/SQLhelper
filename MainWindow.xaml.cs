@@ -30,6 +30,7 @@ namespace KYSQLhelper
             InitializeComponent();
         }
 
+        #region windowLoaded
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //default value
@@ -38,14 +39,22 @@ namespace KYSQLhelper
             Password.Text = "koh1234";
 
         }
+        #endregion
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Connecting to SQl and check the Credentials
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SqlConnectBtn_Click(object sender, RoutedEventArgs e)
         {
             SQLhandler SqlConnection = new SQLhandler(IpAdress.Text, UserName.Text, Password.Text);
 
             if (SQLhandler.CheckConnection())
             {
-                MessageBox.Show("Connected");
+                writeLog("Connected");
+                SqlConnectBtn.Background = Brushes.Green;
+
                 string query = "select name from sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb','KY_CodeLib');";
 
                 DataTable DbNames = SQLhandler.ExecuteQuery(query);
@@ -57,11 +66,10 @@ namespace KYSQLhelper
             }
             else
             {
-                MessageBox.Show("Check the connection details");
+                writeLog("Check the connection details");
+                SqlConnectBtn.Background = Brushes.Gray;
                 ComboBoxDB.Items.Clear();
             }
-
-
         }
 
         private void ComboBoxDB_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -94,38 +102,59 @@ namespace KYSQLhelper
         {
             string selectType = string.Empty;
             string compareSign = string.Empty;
+            string query = string.Empty;
+            string compareInput = CompareInput.Text;
+
 
             switch (ComboBoxCompareType.Text)
             {
                 case "EQUAL": compareSign = "="; break;
-                case "LIKE": compareSign = "LIKE"; break;
+                case "LIKE": compareSign = " " + "LIKE"; compareInput = string.Format("%{0}%",compareInput); break;
             }
 
-            if (ComboBoxSelectPrime.Text == "ALL")
-            {
+            if (ComboBoxSelectPrime.Text == "All")
                 selectType = "*";
-            }
             else
-            {
                 selectType = ComboBoxSelectPrime.SelectedItem.ToString();
-            }
-                
-            
-            string query = string.Format("SELECT {0} FROM {1}.dbo.{2} WHERE {3}{4}'{5}' ORDER BY {6} {7}",
-                                            "*",
-                                            ComboBoxDB.SelectedItem,
-                                            ComboBoxTable.SelectedItem,
-                                            ComboBoxSelectWhere.SelectedItem,
-                                            compareSign,
-                                            CompareInput.Text,
-                                            ComboBoxSort.SelectedItem.ToString(),
-                                            ComboBoxOrder.Text
-                                            );
-            LogBox.Text = query;
+
+            query = string.Format("SELECT {0} ", selectType);
+
+
+            if (ComboBoxSelectSecond.SelectedItem != null)
+                query += string.Format(",{0}", ComboBoxSelectSecond.SelectedItem);
+
+            if (ComboBoxSelectThird.SelectedItem != null)
+                query += string.Format(",{0}", ComboBoxSelectThird.SelectedItem);
+
+            query += string.Format(" FROM {1}.dbo.{2} ",selectType,ComboBoxDB.SelectedItem,ComboBoxTable.SelectedItem);
+
+
+            if(ComboBoxSelectWhere.SelectedItem != null)
+                query += string.Format(" WHERE {0}{1}'{2}' ",ComboBoxSelectWhere.SelectedItem,compareSign,compareInput);
+
+            if(ComboBoxSort.SelectedItem != null)
+                query += string.Format("ORDER BY {0} ",ComboBoxSort.SelectedItem.ToString());
+
+            if(!string.IsNullOrEmpty(ComboBoxOrder.Text))
+                query += " " + ComboBoxOrder.Text;
+
+            writeLog($" Current query will be executed{query}");
 
             DataTable GridData = SQLhandler.ExecuteQuery(query);
 
             dataGrid.ItemsSource = GridData.DefaultView;
         }
+
+        private void ClearTable_Click(object sender, RoutedEventArgs e)
+        {
+            dataGrid.ItemsSource = null;
+        }
+
+        public void writeLog(string message)
+        {
+            LogBox.Text += Environment.NewLine + message;
+        }
+
+
     }
 }

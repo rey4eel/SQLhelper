@@ -6,10 +6,12 @@
         xmlns:local="clr-namespace:KYSQLhelper"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
-        Title="SQLquery" Height="680" Width="800">
+        Title="SQLquery" Height="680" Width="800" WindowStartupLocation="CenterScreen" x:Name="App"
+        Icon="sqlicon.ico"
+        >
 
     <StackPanel>
-        <!--Connection section-->
+        
         <!--#region Connection -->
         <TextBlock Text="Connection credentials" FontWeight="Bold" Margin="10 5"/>
 
@@ -35,17 +37,14 @@
             <TextBox Grid.Column="2" Grid.Row="1" Margin="10 0 10 0" Padding="2" x:Name="UserName"/>
             <TextBox Grid.Column="3" Grid.Row="1" Margin="10 0 10 0" Padding="2" x:Name="Password"/>
 
-            <Button Grid.Column="4" Grid.Row="1" Content="Connection test" Margin="10 0 10 0" Click="Button_Click"/>
+            <Button Style="{StaticResource RoundButtonTemplate}" FontWeight="Bold"  Grid.Column="4" Grid.Row="1" Content="Connect" Margin="10 0 10 0" x:Name="SqlConnectBtn" Click="SqlConnectBtn_Click"/>
         </Grid>
 
         
         <!--#endregion-->
-
-        <!--Query section-->
         <!--#region Query -->
         <TextBlock Text="Search Option" FontWeight="Bold" Margin="10 10"/>
         <Grid>
-
             <!--#region Col defenition -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -56,8 +55,6 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!--#endregion-->
-
-
             <!--#region Row defenition -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -68,9 +65,6 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <!--#endregion-->
-
-
-            <!--FROM-->
             <!--#region FROM -->
             <Label Grid.Column="0" Grid.Row="0" Content="From DB" Margin="10 0"/>
             <ComboBox Grid.Column="0" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxDB" SelectionChanged="ComboBoxDB_SelectionChanged"/>
@@ -78,12 +72,31 @@
             <Label Grid.Column="0" Grid.Row="2" Content="From Table" Margin="10 0"/>
             <ComboBox Grid.Column="0" Grid.Row="3" Margin="10 0 10 0" x:Name="ComboBoxTable" SelectionChanged="ComboBoxTable_SelectionChanged"/>
             <!--#endregion-->
-
-            <!--SELECT-->
             <!--#region SELECT -->
             <Label Grid.Column="1" Grid.Row="0" Content="Select" Margin="10 0"/>
-            <Label Grid.Column="1" Grid.Row="2" Content="AND" Margin="10 0"/>
-            <Label Grid.Column="1" Grid.Row="4" Content="AND" Margin="10 0"/>
+            
+
+            <Grid Grid.Column="1" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"  Content="AND" Margin="10 0"/>
+                <!--" CheckBox Grid.Column="1" x:Name="SelectSecondItem" Content="Use" VerticalAlignment="Center"  /-->
+            </Grid>
+            
+            
+
+            <Grid Grid.Column="1" Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"  Content="AND" Margin="10 0"/>
+                <!--" CheckBox Grid.Column="1" x:Name="SelectThirdItem" Content="Use" VerticalAlignment="Center"/-->
+            </Grid>
 
             <ComboBox Grid.Column="1" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxSelectPrime">
                 <ComboBoxItem Content="All"/>
@@ -91,10 +104,18 @@
             <ComboBox Grid.Column="1" Grid.Row="3" Margin="10 0 10 0" x:Name="ComboBoxSelectSecond"></ComboBox>
             <ComboBox Grid.Column="1" Grid.Row="5" Margin="10 0 10 0" x:Name="ComboBoxSelectThird"></ComboBox>
             <!--#endregion-->
-
-            <!--WHERE-->
             <!--#region WHERE -->
-            <Label Grid.Column="2" Grid.Row="0" Content="Where" Margin="10 0"/>
+
+
+            <Grid Grid.Column="2" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"  Content="Where" Margin="10 0"/>
+            </Grid>
+
             <ComboBox Grid.Column="2" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxSelectWhere">
             </ComboBox>
             <!--#endregion-->
@@ -104,7 +125,7 @@
             <Label Grid.Column="3" Grid.Row="0" Content="Compare type" Margin="10 0"/>
             <Label Grid.Column="3" Grid.Row="2" Content="Input" Margin="10 0"/>
 
-            <TextBox Grid.Column="3" Grid.Row="3" Padding="2" x:Name="CompareInput"/>
+            <TextBox Grid.Column="3" Grid.Row="3" Padding="2" x:Name="CompareInput" Margin="10 0 10 0"/>
 
             <ComboBox Grid.Column="3" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxCompareType">
                 <ComboBoxItem Content="LIKE"/>
@@ -127,12 +148,10 @@
 
         </Grid>
         <!--#endregion-->
-
-        <!--Output-->
         <!--#region Output table -->
         <TextBlock Text="Output" FontWeight="Bold" Margin="10 10"/>
 
-        <DataGrid x:Name="dataGrid" Height="100" AutoGenerateColumns="True" Margin="10 10 10 10"/>
+        <DataGrid x:Name="dataGrid" CanUserAddRows="False" MinHeight="150" MaxHeight="200" AutoGenerateColumns="True" Margin="10 10 10 10"/>
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -144,15 +163,13 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Button Content="Execute Query" x:Name="ExecuteQuery" Click="ExecuteQuery_Click" Grid.Column="1" Margin="0 10 10 0" Background="red" FontWeight="Bold"/>
-            <Button Content="Clear Table" Grid.Column="2" Margin="0 10 10 0"/>
+            <Button Content="Clear Table" Grid.Column="2" Margin="0 10 10 0" x:Name="ClearTable" Click="ClearTable_Click" />
         </Grid>
         <!--#endregion-->
-
-        <!--Log-->
         <!--#region Log -->
         <TextBlock Text="Log View" FontWeight="Bold" Margin="10 10"/>
 
-        <TextBox x:Name="LogBox" Height="100" TextWrapping="Wrap" Text="TextBox" Margin="10 10 10 10"/>
+        <TextBox x:Name="LogBox" Height="50" TextWrapping="Wrap" Margin="10 10 10 10"/>
 
         <Grid>
             <Grid.ColumnDefinitions>
