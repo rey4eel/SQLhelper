@@ -17,3 +17,7 @@ C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.csproj.Co
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\Views\Windows\MainWindow.g.cs
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\Views\Windows\MainWindow.baml
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\FontAwesome5.dll
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\FontAwesome5.Net.dll
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\FontAwesome5.xml
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\FontAwesome5.Net.xml

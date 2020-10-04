@@ -16,14 +16,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Nini.Ini;
 
-//Input validation
-//
 
 namespace KYSQLhelper
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -35,45 +31,40 @@ namespace KYSQLhelper
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            SQLhandler.GetCredentialsFromConfig();
+            //SQLhandler.GetCredentialsFromConfig();
             //default value
-            IpAdress.Text = SQLhandler.IpAdress;
-            UserName.Text = SQLhandler.UserName;
-            Password.Text = SQLhandler.Password;
+           // IpAdress.Text = SQLhandler.IpAdress;
+         //   UserName.Text = SQLhandler.UserName;
+          //  Password.Text = SQLhandler.Password;
 
         }
         #endregion
 
-        /// <summary>
-        /// Connecting to SQl and check the Credentials
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SqlConnectBtn_Click(object sender, RoutedEventArgs e)
-        {
-            SQLhandler SqlConnection = new SQLhandler(IpAdress.Text, UserName.Text, Password.Text);
+        //private void SqlConnectBtn_Click(object sender, RoutedEventArgs e)
+        //{
+        //    SQLhandler SqlConnection = new SQLhandler(IpAdress.Text, UserName.Text, Password.Text);
 
-            if (SQLhandler.CheckConnection())
-            {
-                writeLog("Connected");
-                SqlConnectBtn.Background = Brushes.Green;
+        //    if (SQLhandler.CheckConnection())
+        //    {
+        //        writeLog("Connected");
+        //        SqlConnectBtn.Background = Brushes.Green;
 
-                string query = "select name from sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb','KY_CodeLib');";
+        //        string query = "select name from sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb','KY_CodeLib');";
 
-                DataTable DbNames = SQLhandler.ExecuteQuery(query);
+        //        DataTable DbNames = SQLhandler.ExecuteQuery(query);
 
-                for (int i = 0; i < DbNames.Rows.Count; i++)
-                {
-                    ComboBoxDB.Items.Add(DbNames.Rows[i]["name"]);
-                }
-            }
-            else
-            {
-                writeLog("Check the connection details");
-                SqlConnectBtn.Background = Brushes.Gray;
-                ComboBoxDB.Items.Clear();
-            }
-        }
+        //        for (int i = 0; i < DbNames.Rows.Count; i++)
+        //        {
+        //            ComboBoxDB.Items.Add(DbNames.Rows[i]["name"]);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        writeLog("Check the connection details");
+        //        SqlConnectBtn.Background = Brushes.Gray;
+        //        ComboBoxDB.Items.Clear();
+        //    }
+        //}
 
         private void ComboBoxDB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
