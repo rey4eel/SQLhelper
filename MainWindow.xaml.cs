@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Nini.Ini;
 
 //Input validation
 //
@@ -33,10 +34,12 @@ namespace KYSQLhelper
         #region windowLoaded
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+
+            SQLhandler.GetCredentialsFromConfig();
             //default value
-            IpAdress.Text = "127.0.0.1";
-            UserName.Text = "sa";
-            Password.Text = "koh1234";
+            IpAdress.Text = SQLhandler.IpAdress;
+            UserName.Text = SQLhandler.UserName;
+            Password.Text = SQLhandler.Password;
 
         }
         #endregion
@@ -100,6 +103,12 @@ namespace KYSQLhelper
 
         private void ExecuteQuery_Click(object sender, RoutedEventArgs e)
         {
+            if (ComboBoxDB.SelectedItem == null && ComboBoxTable.SelectedItem == null && ComboBoxSelectPrime.SelectedItem == null)
+            {
+                writeLog("Chooce DB/Table/Item");
+                return;
+            }
+
             string selectType = string.Empty;
             string compareSign = string.Empty;
             string query = string.Empty;
@@ -138,7 +147,7 @@ namespace KYSQLhelper
             if(!string.IsNullOrEmpty(ComboBoxOrder.Text))
                 query += " " + ComboBoxOrder.Text;
 
-            writeLog($" Current query will be executed{query}");
+            writeLog($" Current query will be executed -> {query}");
 
             DataTable GridData = SQLhandler.ExecuteQuery(query);
 
@@ -153,6 +162,7 @@ namespace KYSQLhelper
         public void writeLog(string message)
         {
             LogBox.Text += Environment.NewLine + message;
+            LogBox.ScrollToEnd();
         }
 
 

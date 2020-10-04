@@ -6,15 +6,45 @@ using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Data.SqlClient;
 using System.Data;
+using Nini.Ini;
+using Nini.Config;
+using System.Runtime.CompilerServices;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace KYSQLhelper
 {
    
-    class SQLhandler
+    class SQLhandler 
     {
-        private static string IpAdress { get; set; }
-        private static string UserName { get; set; }
-        private static string Password { get; set; }
+        private static string _ipAdress;
+
+        public static string IpAdress
+        {
+            get { return _ipAdress; }
+            set 
+            { 
+                _ipAdress = value;
+            }
+            
+        }
+
+        private static string _userName;
+
+        public static string UserName
+        {
+            get { return _userName; }
+            set { _userName = value; }
+        }
+
+        private static string _password;
+
+        public static string Password
+        {
+            get { return _password; }
+            set { _password = value; }
+        }
+
         private static string strConnectionString { get; set; }
 
         public SQLhandler(string ipAdress,string userName,string password)
@@ -87,6 +117,17 @@ namespace KYSQLhelper
 
             }
             return RcvData;
+        }
+
+        public static void GetCredentialsFromConfig()
+        {
+            string defaultConfigPath = @"C:\KohYoung\AOI\AOIGUISetup.ini";
+
+            IConfigSource source = new IniConfigSource(defaultConfigPath);
+
+            IpAdress = source.Configs["RESULT"].Get("DBServer");
+            UserName = source.Configs["RESULT"].Get("DBID");
+            Password = source.Configs["RESULT"].Get("DBPassword");
         }
 
     }

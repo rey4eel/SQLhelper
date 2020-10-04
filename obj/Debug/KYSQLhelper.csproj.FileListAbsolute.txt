@@ -14,3 +14,5 @@ C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.csproj.Co
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.exe
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.pdb
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\App.baml
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\Nini.dll
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.csproj.CopyComplete

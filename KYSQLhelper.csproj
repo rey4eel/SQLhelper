@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Nini">
+      <HintPath>..\..\..\Desktop\Nini.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -97,6 +100,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="sqlicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Models\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\Windows\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
