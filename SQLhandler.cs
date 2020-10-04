@@ -10,7 +10,7 @@ using Nini.Ini;
 using Nini.Config;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
+
 
 namespace KYSQLhelper
 {

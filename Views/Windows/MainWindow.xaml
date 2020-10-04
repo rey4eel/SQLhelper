@@ -3,12 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:KYSQLhelper.ViewModels"
         xmlns:local="clr-namespace:KYSQLhelper"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
-        Title="SQLquery" Height="680" Width="800" WindowStartupLocation="CenterScreen" x:Name="App"
-        Icon="sqlicon.ico"
+        Title="{Binding Title}" Height="680" Width="800" WindowStartupLocation="CenterScreen" x:Name="App"
+        
         >
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <StackPanel>
         
         <!--#region Connection -->
