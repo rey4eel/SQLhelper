@@ -27,18 +27,6 @@ namespace KYSQLhelper
             InitializeComponent();
         }
 
-        #region windowLoaded
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            //SQLhandler.GetCredentialsFromConfig();
-            //default value
-           // IpAdress.Text = SQLhandler.IpAdress;
-         //   UserName.Text = SQLhandler.UserName;
-          //  Password.Text = SQLhandler.Password;
-
-        }
-        #endregion
 
         //private void SqlConnectBtn_Click(object sender, RoutedEventArgs e)
         //{
@@ -66,84 +54,84 @@ namespace KYSQLhelper
         //    }
         //}
 
-        private void ComboBoxDB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string query = string.Format("SELECT name FROM {0}.sys.tables WHERE name LIKE '%TB%'", ComboBoxDB.SelectedItem);
-            DataTable TableNames = SQLhandler.ExecuteQuery(query);
+        //private void ComboBoxDB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    string query = string.Format("SELECT name FROM {0}.sys.tables WHERE name LIKE '%TB%'", ComboBoxDB.SelectedItem);
+        //    DataTable TableNames = SQLhandler.ExecuteQuery(query);
 
-            for (int i = 0; i < TableNames.Rows.Count; i++)
-            {
-                ComboBoxTable.Items.Add(TableNames.Rows[i]["name"]);
-            }
-        }
+        //    for (int i = 0; i < TableNames.Rows.Count; i++)
+        //    {
+        //        ComboBoxTable.Items.Add(TableNames.Rows[i]["name"]);
+        //    }
+        //}
 
-        private void ComboBoxTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string query = string.Format("SELECT TOP 1 * FROM {0}.dbo.{1}", ComboBoxDB.SelectedItem, ComboBoxTable.SelectedItem);
-            DataTable ColumnNames = SQLhandler.ExecuteQuery(query);
+        //private void ComboBoxTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    string query = string.Format("SELECT TOP 1 * FROM {0}.dbo.{1}", ComboBoxDB.SelectedItem, ComboBoxTable.SelectedItem);
+        //    DataTable ColumnNames = SQLhandler.ExecuteQuery(query);
 
-            for (int i = 0; i < ColumnNames.Columns.Count; i++)
-            {
-                ComboBoxSelectPrime.Items.Add(ColumnNames.Columns[i].ColumnName);
-                ComboBoxSelectSecond.Items.Add(ColumnNames.Columns[i].ColumnName);
-                ComboBoxSelectThird.Items.Add(ColumnNames.Columns[i].ColumnName);
-                ComboBoxSelectWhere.Items.Add(ColumnNames.Columns[i].ColumnName);
-                ComboBoxSort.Items.Add(ColumnNames.Columns[i].ColumnName);
-            }
-        }
+        //    for (int i = 0; i < ColumnNames.Columns.Count; i++)
+        //    {
+        //        ComboBoxSelectPrime.Items.Add(ColumnNames.Columns[i].ColumnName);
+        //        ComboBoxSelectSecond.Items.Add(ColumnNames.Columns[i].ColumnName);
+        //        ComboBoxSelectThird.Items.Add(ColumnNames.Columns[i].ColumnName);
+        //        ComboBoxSelectWhere.Items.Add(ColumnNames.Columns[i].ColumnName);
+        //        ComboBoxSort.Items.Add(ColumnNames.Columns[i].ColumnName);
+        //    }
+        //}
 
-        private void ExecuteQuery_Click(object sender, RoutedEventArgs e)
-        {
-            if (ComboBoxDB.SelectedItem == null && ComboBoxTable.SelectedItem == null && ComboBoxSelectPrime.SelectedItem == null)
-            {
-                writeLog("Chooce DB/Table/Item");
-                return;
-            }
+        //private void ExecuteQuery_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (ComboBoxDB.SelectedItem == null && ComboBoxTable.SelectedItem == null && ComboBoxSelectPrime.SelectedItem == null)
+        //    {
+        //        writeLog("Chooce DB/Table/Item");
+        //        return;
+        //    }
 
-            string selectType = string.Empty;
-            string compareSign = string.Empty;
-            string query = string.Empty;
-            string compareInput = CompareInput.Text;
-
-
-            switch (ComboBoxCompareType.Text)
-            {
-                case "EQUAL": compareSign = "="; break;
-                case "LIKE": compareSign = " " + "LIKE"; compareInput = string.Format("%{0}%",compareInput); break;
-            }
-
-            if (ComboBoxSelectPrime.Text == "All")
-                selectType = "*";
-            else
-                selectType = ComboBoxSelectPrime.SelectedItem.ToString();
-
-            query = string.Format("SELECT {0} ", selectType);
+        //    string selectType = string.Empty;
+        //    string compareSign = string.Empty;
+        //    string query = string.Empty;
+        //    string compareInput = CompareInput.Text;
 
 
-            if (ComboBoxSelectSecond.SelectedItem != null)
-                query += string.Format(",{0}", ComboBoxSelectSecond.SelectedItem);
+        //    switch (ComboBoxCompareType.Text)
+        //    {
+        //        case "EQUAL": compareSign = "="; break;
+        //        case "LIKE": compareSign = " " + "LIKE"; compareInput = string.Format("%{0}%",compareInput); break;
+        //    }
 
-            if (ComboBoxSelectThird.SelectedItem != null)
-                query += string.Format(",{0}", ComboBoxSelectThird.SelectedItem);
+        //    if (ComboBoxSelectPrime.Text == "All")
+        //        selectType = "*";
+        //    else
+        //        selectType = ComboBoxSelectPrime.SelectedItem.ToString();
 
-            query += string.Format(" FROM {1}.dbo.{2} ",selectType,ComboBoxDB.SelectedItem,ComboBoxTable.SelectedItem);
+        //    query = string.Format("SELECT {0} ", selectType);
 
 
-            if(ComboBoxSelectWhere.SelectedItem != null)
-                query += string.Format(" WHERE {0}{1}'{2}' ",ComboBoxSelectWhere.SelectedItem,compareSign,compareInput);
+        //    if (ComboBoxSelectSecond.SelectedItem != null)
+        //        query += string.Format(",{0}", ComboBoxSelectSecond.SelectedItem);
 
-            if(ComboBoxSort.SelectedItem != null)
-                query += string.Format("ORDER BY {0} ",ComboBoxSort.SelectedItem.ToString());
+        //    if (ComboBoxSelectThird.SelectedItem != null)
+        //        query += string.Format(",{0}", ComboBoxSelectThird.SelectedItem);
 
-            if(!string.IsNullOrEmpty(ComboBoxOrder.Text))
-                query += " " + ComboBoxOrder.Text;
+        //    query += string.Format(" FROM {1}.dbo.{2} ",selectType,ComboBoxDB.SelectedItem,ComboBoxTable.SelectedItem);
 
-            writeLog($" Current query will be executed -> {query}");
 
-            DataTable GridData = SQLhandler.ExecuteQuery(query);
+        //    if(ComboBoxSelectWhere.SelectedItem != null)
+        //        query += string.Format(" WHERE {0}{1}'{2}' ",ComboBoxSelectWhere.SelectedItem,compareSign,compareInput);
 
-            dataGrid.ItemsSource = GridData.DefaultView;
-        }
+        //    if(ComboBoxSort.SelectedItem != null)
+        //        query += string.Format("ORDER BY {0} ",ComboBoxSort.SelectedItem.ToString());
+
+        //    if(!string.IsNullOrEmpty(ComboBoxOrder.Text))
+        //        query += " " + ComboBoxOrder.Text;
+
+        //    writeLog($" Current query will be executed -> {query}");
+
+        //    DataTable GridData = SQLhandler.ExecuteQuery(query);
+
+        //    dataGrid.ItemsSource = GridData.DefaultView;
+        //}
 
         private void ClearTable_Click(object sender, RoutedEventArgs e)
         {

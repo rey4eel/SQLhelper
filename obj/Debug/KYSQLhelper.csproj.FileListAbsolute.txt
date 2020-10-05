@@ -12,7 +12,6 @@ C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.csproj.Co
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.exe
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.pdb
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\App.baml
-C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\Nini.dll
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.csproj.CopyComplete
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\Views\Windows\MainWindow.g.cs
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\GeneratedInternalTypeHelper.g.cs
@@ -21,3 +20,10 @@ C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\FontAwesome5.dll
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\FontAwesome5.Net.dll
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\FontAwesome5.xml
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\FontAwesome5.Net.xml
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\Microsoft.Xaml.Behaviors.xml
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\Microsoft.Expression.Interactions.dll
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\Microsoft.Expression.Interactions.xml
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\System.Windows.Interactivity.xml

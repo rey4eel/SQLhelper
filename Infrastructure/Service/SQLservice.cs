@@ -12,20 +12,27 @@ using System.Runtime.CompilerServices;
 using System.ComponentModel;
 
 
-namespace KYSQLhelper
+namespace KYSQLhelper.Infrastructure.Service
 {
    
-    class SQLhandler 
+    class SQLService
     {
+
+        private bool _IsConnected = false;
+
+        public bool IsConnected
+        {
+            get { return _IsConnected; }
+            set { _IsConnected = value; }
+        }
+
+
         private static string _ipAdress;
 
         public static string IpAdress
         {
             get { return _ipAdress; }
-            set 
-            { 
-                _ipAdress = value;
-            }
+            set { _ipAdress = value;}
             
         }
 
@@ -47,7 +54,7 @@ namespace KYSQLhelper
 
         private static string strConnectionString { get; set; }
 
-        public SQLhandler(string ipAdress,string userName,string password)
+        public  SQLService(string ipAdress,string userName,string password)
         {
 
             if (ipAdress == string.Empty)
@@ -64,11 +71,12 @@ namespace KYSQLhelper
             Password = password;
 
             strConnectionString = string.Format("Server={0};user id={1};password={2};", IpAdress, UserName, Password);
+
+            CheckConnection();
         }
 
-        public static bool CheckConnection()
+        public void CheckConnection()
         {
-            bool flag = false;
             try
             {
                 using (SqlConnection connection = new SqlConnection(strConnectionString))
@@ -79,24 +87,23 @@ namespace KYSQLhelper
                         using (SqlCommand sqlCommand = new SqlCommand("SELECT 1", connection))
                         {
                             sqlCommand.ExecuteNonQuery();
-                            flag = true;
+                            IsConnected = true;
                         }
                     }
                     catch
                     {
-                        flag = false;
+                        IsConnected = false;
                     }
                     connection.Close();
                 }
             }
             catch
             {
-                flag = false;
-            }
-            return flag;
+                IsConnected = false;
+            }           
         }
 
-        public static DataTable ExecuteQuery(string query)
+        public DataTable ExecuteQuery(string query)
         {
             DataTable RcvData = new DataTable();
             try

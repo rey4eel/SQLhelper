@@ -4,12 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:KYSQLhelper.ViewModels"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:local="clr-namespace:KYSQLhelper"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="680" Width="800" WindowStartupLocation="CenterScreen" x:Name="App"
         Icon="/Resourse/Ico/sqlicon.ico"
         >
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding SettingPreLoadCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
@@ -71,10 +79,23 @@
             <!--#endregion-->
             <!--#region FROM -->
             <Label Grid.Column="0" Grid.Row="0" Content="From DB" Margin="10 0"/>
-            <ComboBox Grid.Column="0" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxDB" SelectionChanged="ComboBoxDB_SelectionChanged"/>
+            <ComboBox Grid.Column="0" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxDB" SelectedItem="{Binding Path=FromSelected , Mode=TwoWay}" ItemsSource="{Binding DbNames}">
+                <i:Interaction.Triggers>
+                     <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding DataBaseChangedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
 
             <Label Grid.Column="0" Grid.Row="2" Content="From Table" Margin="10 0"/>
-            <ComboBox Grid.Column="0" Grid.Row="3" Margin="10 0 10 0" x:Name="ComboBoxTable" SelectionChanged="ComboBoxTable_SelectionChanged"/>
+            <ComboBox Grid.Column="0" Grid.Row="3" Margin="10 0 10 0" x:Name="ComboBoxTable" SelectedItem="{Binding Path=FromTableSelected , Mode=TwoWay}" ItemsSource="{Binding TableNames}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding TableChangedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+
             <!--#endregion-->
             <!--#region SELECT -->
             <Label Grid.Column="1" Grid.Row="0" Content="Select" Margin="10 0"/>
@@ -102,8 +123,9 @@
                 <!--" CheckBox Grid.Column="1" x:Name="SelectThirdItem" Content="Use" VerticalAlignment="Center"/-->
             </Grid>
 
-            <ComboBox Grid.Column="1" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxSelectPrime">
-                <ComboBoxItem Content="All"/>
+            <ComboBox Grid.Column="1" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxSelectPrime" ItemsSource="{Binding ColumnName}">
+                <!--ComboBoxItem Content="All"/-->
+                
             </ComboBox>
             <ComboBox Grid.Column="1" Grid.Row="3" Margin="10 0 10 0" x:Name="ComboBoxSelectSecond"></ComboBox>
             <ComboBox Grid.Column="1" Grid.Row="5" Margin="10 0 10 0" x:Name="ComboBoxSelectThird"></ComboBox>
@@ -166,7 +188,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Button Content="Execute Query" Style="{StaticResource RoundButtonTemplate}" x:Name="ExecuteQuery" Click="ExecuteQuery_Click" Grid.Column="1" Margin="0 10 10 0" Background="red" FontWeight="Bold"/>
+            <Button Content="Execute Query" Style="{StaticResource RoundButtonTemplate}" x:Name="ExecuteQuery" Grid.Column="1" Margin="0 10 10 0" Background="red" FontWeight="Bold"/>
             <Button Content="Clear Table" Style="{StaticResource RoundButtonTemplate}" Grid.Column="2" Margin="0 10 10 0" x:Name="ClearTable" Click="ClearTable_Click" />
         </Grid>
         <!--#endregion-->
