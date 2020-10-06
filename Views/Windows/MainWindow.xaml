@@ -8,8 +8,9 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:local="clr-namespace:KYSQLhelper"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="680" Width="800" WindowStartupLocation="CenterScreen" x:Name="App"
+        Title="{Binding Title}" Height="630" Width="800" WindowStartupLocation="CenterScreen" x:Name="App"
         Icon="/Resourse/Ico/sqlicon.ico"
+        ResizeMode="NoResize"
         >
     
     <i:Interaction.Triggers>
@@ -21,6 +22,7 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
+
     <StackPanel>
         
         <!--#region Connection -->
@@ -162,10 +164,15 @@
 
         </Grid>
         <!--#endregion-->
+
+        <TextBlock Text="Manual Query Command" FontWeight="Bold" Margin="10 10"/>
+        <TextBox Height="25" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Margin="10 0 10 10"/>
+
+
         <!--#region Output table -->
         <TextBlock Text="Output" FontWeight="Bold" Margin="10 10"/>
 
-        <DataGrid x:Name="dataGrid" CanUserAddRows="False" MinHeight="150" MaxHeight="200" ItemsSource="{Binding QueryData}" AutoGenerateColumns="True" Margin="10 10 10 10"/>
+        <DataGrid x:Name="dataGrid" CanUserAddRows="False" MinHeight="150" MaxHeight="200" ItemsSource="{Binding QueryData}" AutoGenerateColumns="True" Margin="10 0 10 10"/>
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -181,26 +188,38 @@
             <Button Content="Export CSV" Style="{StaticResource RoundButtonTemplate}" Command="{Binding SaveCsvFileCommand}" Grid.Column="1" Margin="0 10 10 0" FontWeight="Bold"/>
             <Button Content="Execute Query" Style="{StaticResource RoundButtonTemplate}" Command="{Binding ExecuteQueryCommand}" Grid.Column="2" Margin="0 10 10 0" Background="red" FontWeight="Bold"/>
             <Button Content="Get last Data" Style="{StaticResource RoundButtonTemplate}" Command="{Binding GetLastResultCommand}" Grid.Column="3" Margin="0 10 10 0" Background="red" FontWeight="Bold"/>
-            <Button Content="Clear Table" Style="{StaticResource RoundButtonTemplate}"  Grid.Column="4" Margin="0 10 10 0" x:Name="ClearTable" Click="ClearTable_Click" />
+            <Button Content="Clear Table" Style="{StaticResource RoundButtonTemplate}"  Grid.Column="4" Margin="0 10 10 0" x:Name="ClearTable"/>
         </Grid>
         <!--#endregion-->
-        <!--#region Log -->
-        <TextBlock Text="Log View" FontWeight="Bold" Margin="10 10"/>
+ 
 
-        <TextBox x:Name="LogBox" Height="50" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Margin="10 10 10 10"/>
-
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="120"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Button Content="Clear Log" Style="{StaticResource RoundButtonTemplate}" Grid.Column="2" Margin="0 10 10 0" />
-        </Grid>
-        <!--#endregion-->
+       
+            <StatusBar Margin="0 20" VerticalAlignment="Bottom">
+                <StatusBar.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="100" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </StatusBar.ItemsPanel>
+                <StatusBarItem>
+                    <TextBlock Text="{Binding StatusBar}" />
+                </StatusBarItem>
+                <Separator Grid.Column="1" />
+                <StatusBarItem Grid.Column="2">
+                    <TextBlock Text="{Binding StatusDetails}" />
+                </StatusBarItem>
+                <Separator Grid.Column="3" />
+                <StatusBarItem Grid.Column="4">
+                    <ProgressBar Value="{Binding ProgressBar , Mode=TwoWay}" Width="90" Height="16" />
+                </StatusBarItem>
+            </StatusBar>
 
     </StackPanel>
 

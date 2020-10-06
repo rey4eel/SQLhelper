@@ -75,6 +75,7 @@
     </ApplicationDefinition>
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
     <Compile Include="Infrastructure\Commands\LambdaCommand.cs" />
+    <Compile Include="Infrastructure\Service\LogService.cs" />
     <Compile Include="Infrastructure\Service\SQLservice.cs" />
     <Compile Include="Models\DataBaseServer.cs" />
     <Compile Include="ViewModels\Base\ViewModel.cs" />

@@ -19,7 +19,9 @@ namespace KYSQLhelper.ViewModels
     {
         public SQLService SqlConnection { get; set; }
 
-        #region Tiltle
+        #region VIEW RESOURSE
+
+        #region Main window title
 
         /// <summary>
         /// WindowTitle
@@ -33,7 +35,7 @@ namespace KYSQLhelper.ViewModels
 		}
         #endregion
 
-        #region CompareInput
+        #region CompareInput TextBox
 
         /// <summary>
         /// WindowTitle
@@ -47,7 +49,7 @@ namespace KYSQLhelper.ViewModels
         }
         #endregion
 
-        #region Ipadress
+        #region Ipadress TextBox
         private string _ipAdress;
 
         public string IpAdress
@@ -57,7 +59,7 @@ namespace KYSQLhelper.ViewModels
         }
         #endregion
 
-        #region User Name
+        #region User Name TextBox
         private string _userName;
 
         public string UserName
@@ -67,7 +69,7 @@ namespace KYSQLhelper.ViewModels
         }
         #endregion
 
-        #region Password
+        #region Password TextBox
         private string _password;
 
         public string Password
@@ -77,7 +79,7 @@ namespace KYSQLhelper.ViewModels
         }
         #endregion
 
-        #region BtnColor
+        #region Connection Button 
         private Brush _ConnectionBtnColor = Brushes.Gray;
 
         public Brush ConnectionBtnColor 
@@ -85,6 +87,39 @@ namespace KYSQLhelper.ViewModels
             get { return _ConnectionBtnColor; }
             set => Set(ref _ConnectionBtnColor, value);
         }
+        #endregion
+
+        #region Status Bar TextBox
+        private string _statusBar;
+
+        public string StatusBar
+        {
+            get { return _statusBar; }
+            set => Set(ref _statusBar, value);
+        }
+        #endregion
+
+        #region StatusDetails TextBox
+        private string _statusDetails;
+
+        public string StatusDetails
+        {
+            get { return _statusDetails; }
+            set => Set(ref _statusDetails, value);
+        }
+        #endregion
+
+        #region ProgressBar
+        private int _progressBar = 0;
+
+        public int ProgressBar
+        {
+            get { return _progressBar; }
+            set => Set(ref _progressBar, value);
+        }
+        #endregion
+
+
         #endregion
 
         #region data bases from the server
@@ -257,6 +292,9 @@ namespace KYSQLhelper.ViewModels
             {
                 ConnectionBtnColor = Brushes.Green;
 
+                StatusBar = "Connected";
+                StatusDetails = string.Empty;
+
                 string query = "select name from sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb','KY_CodeLib');";
 
                 DataTable SqlResponce = SqlConnection.ExecuteQuery(query);
@@ -268,6 +306,8 @@ namespace KYSQLhelper.ViewModels
             }
             else
             {
+                StatusBar = "Error";
+                StatusDetails = "Chcek the Credentials = Connection Failed";
                 ConnectionBtnColor = Brushes.Gray;
                 if (DbNames.Count > 0)
                 {
@@ -295,6 +335,9 @@ namespace KYSQLhelper.ViewModels
                 TableNames.Clear();
 
             string query = string.Format("SELECT name FROM {0}.sys.tables WHERE name LIKE '%TB%'", FromSelected);
+
+            StatusDetails = $"Execute => {query}";
+
             DataTable SqlResponce = SqlConnection.ExecuteQuery(query);
 
             for (int i = 0; i < SqlResponce.Rows.Count; i++)
@@ -319,6 +362,9 @@ namespace KYSQLhelper.ViewModels
                 ColumnName.Clear();
 
             string query = string.Format("SELECT TOP 1 * FROM {0}.dbo.{1}", FromSelected, FromTableSelected);
+
+            StatusDetails = $"Execute => {query}";
+
             DataTable SqlResponce = SqlConnection.ExecuteQuery(query);
 
             for (int i = 0; i < SqlResponce.Columns.Count; i++)
@@ -328,7 +374,6 @@ namespace KYSQLhelper.ViewModels
         }
 
         #endregion
-
 
         #region ExecuteQueryCommand
         public ICommand ExecuteQueryCommand { get; }
@@ -345,7 +390,6 @@ namespace KYSQLhelper.ViewModels
             string compareSign = string.Empty;
             string query = string.Empty;
             string compareInput = CompareInput;
-
 
             switch (CompareTypeSelected)
             {
@@ -375,17 +419,12 @@ namespace KYSQLhelper.ViewModels
             if (!string.IsNullOrWhiteSpace(OrderBySelected))
                 query += " " + OrderBySelected;
 
+            StatusDetails = $"Execute => {query}";
 
-            Debug.Print($" Current query will be executed -> {query}");
-
-            QueryData = SqlConnection.ExecuteQuery(query);
-            //QueryData = SqlConnection.ExecuteQuery("SELECT TOP 1 * FROM KY_AOI.dbo.TB_AOIPCB ORDER BY StartDateTime DESC");
-            
-
+            QueryData = SqlConnection.ExecuteQuery(query);        
         }
 
         #endregion
-
 
         #region GetLastResultCommand
         public ICommand GetLastResultCommand { get; }
@@ -400,6 +439,8 @@ namespace KYSQLhelper.ViewModels
 
             if (QueryData.Rows.Count > 0)
                 QueryData.Clear();
+
+            StatusDetails = $"Execute => {"SELECT TOP 1 * FROM KY_AOI.dbo.TB_AOIPCB ORDER BY StartDateTime DESC"}";
 
             QueryData = SqlConnection.ExecuteQuery("SELECT TOP 1 * FROM KY_AOI.dbo.TB_AOIPCB ORDER BY StartDateTime DESC");
         }
@@ -431,7 +472,9 @@ namespace KYSQLhelper.ViewModels
                         sb.AppendLine(string.Join(",", fields));
                     }
 
-            string path = @"C:\Users\vardan.saakian\Desktop\TextData.txt";
+            string path = @"C:\Users\vardan.saakian\Desktop\sqlData.csv";
+
+            StatusDetails = $"File will be saved => {path}";
 
             File.WriteAllText(path, sb.ToString());
 
