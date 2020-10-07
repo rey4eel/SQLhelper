@@ -29,10 +29,10 @@ namespace KYSQLhelper.ViewModels
         private string _Title = "SQLhelper";
 
         public string Title
-		{
-			get => _Title;
-			set => Set(ref _Title, value);
-		}
+        {
+            get => _Title;
+            set => Set(ref _Title, value);
+        }
         #endregion
 
         #region CompareInput TextBox
@@ -82,7 +82,7 @@ namespace KYSQLhelper.ViewModels
         #region Connection Button 
         private Brush _ConnectionBtnColor = Brushes.Gray;
 
-        public Brush ConnectionBtnColor 
+        public Brush ConnectionBtnColor
         {
             get { return _ConnectionBtnColor; }
             set => Set(ref _ConnectionBtnColor, value);
@@ -144,6 +144,16 @@ namespace KYSQLhelper.ViewModels
 
         #endregion
 
+        #region Column name for Prime Combo
+        private ObservableCollection<string> _columnNamePrime = new ObservableCollection<string>() { "ALL" };
+
+        public ObservableCollection<string> ColumnNamePrime
+        {
+            get { return _columnNamePrime; }
+            set => Set(ref _columnNamePrime, value);
+        }
+        #endregion
+
         #region Column name from table
         private ObservableCollection<string> _columnName = new ObservableCollection<string>();
 
@@ -153,7 +163,7 @@ namespace KYSQLhelper.ViewModels
             set => Set(ref _columnName, value);
         }
 
-        private ObservableCollection<string> _compareType = new ObservableCollection<string>() {"LIKE","BETWEEN","EQUAL" };
+        private ObservableCollection<string> _compareType = new ObservableCollection<string>() { "LIKE", "BETWEEN", "EQUAL" };
 
         public ObservableCollection<string> CompareType
         {
@@ -161,7 +171,7 @@ namespace KYSQLhelper.ViewModels
             set => Set(ref _compareType, value);
         }
 
-        private ObservableCollection<string> _orderBy = new ObservableCollection<string>() { "ASC", "DESC"};
+        private ObservableCollection<string> _orderBy = new ObservableCollection<string>() { "ASC", "DESC" };
 
         public ObservableCollection<string> OrderBy
         {
@@ -283,7 +293,7 @@ namespace KYSQLhelper.ViewModels
 
         private void OnSqlConnectCommandExecute(object p)
         {
-            if(DbNames.Count > 0)
+            if (DbNames.Count > 0)
                 DbNames.Clear();
 
             SqlConnection = new SQLService(IpAdress, UserName, Password);
@@ -314,7 +324,7 @@ namespace KYSQLhelper.ViewModels
                     DbNames.Clear();
                     FromSelected = string.Empty;
                 }
-                    
+
             }
 
         }
@@ -331,7 +341,7 @@ namespace KYSQLhelper.ViewModels
 
         private void OnDataBaseChangedCommandExecute(object p)
         {
-            if(TableNames.Count >0)
+            if (TableNames.Count > 0)
                 TableNames.Clear();
 
             string query = string.Format("SELECT name FROM {0}.sys.tables WHERE name LIKE '%TB%'", FromSelected);
@@ -369,6 +379,7 @@ namespace KYSQLhelper.ViewModels
 
             for (int i = 0; i < SqlResponce.Columns.Count; i++)
             {
+                ColumnNamePrime.Add(SqlResponce.Columns[i].ColumnName);
                 ColumnName.Add(SqlResponce.Columns[i].ColumnName);
             }
         }
@@ -386,10 +397,13 @@ namespace KYSQLhelper.ViewModels
         private void OnExecuteQueryCommandExecute(object p)
         {
 
-            string selectType = string.Empty;
+            string selectType = FromColumnSelectedPrime;
             string compareSign = string.Empty;
             string query = string.Empty;
             string compareInput = CompareInput;
+
+            if (string.IsNullOrEmpty(selectType) || selectType == "ALL")
+                selectType = "*";
 
             switch (CompareTypeSelected)
             {
@@ -397,7 +411,7 @@ namespace KYSQLhelper.ViewModels
                 case "LIKE": compareSign = " " + "LIKE"; compareInput = string.Format("%{0}%", compareInput); break;
             }
 
-            query = string.Format("SELECT {0} ", FromColumnSelectedPrime);
+            query = string.Format("SELECT {0} ", selectType);
 
 
             if (!string.IsNullOrWhiteSpace(FromColumnSelectedSecond))
@@ -458,19 +472,18 @@ namespace KYSQLhelper.ViewModels
         private void OnSaveCsvFileCommandExecute(object p)
         {
 
-            Debug.Print("called");
-                    StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
 
-                    IEnumerable<string> columnNames = QueryData.Columns.Cast<DataColumn>().
-                                                      Select(column => column.ColumnName);
+            IEnumerable<string> columnNames = QueryData.Columns.Cast<DataColumn>().
+                                            Select(column => column.ColumnName);
 
-                    sb.AppendLine(string.Join(",", columnNames));
+            sb.AppendLine(string.Join(",", columnNames));
 
-                    foreach (DataRow row in QueryData.Rows)
-                    {
-                        IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString());
-                        sb.AppendLine(string.Join(",", fields));
-                    }
+            foreach (DataRow row in QueryData.Rows)
+            {
+            IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString());
+            sb.AppendLine(string.Join(",", fields));
+            }
 
             string path = @"C:\Users\vardan.saakian\Desktop\sqlData.csv";
 
@@ -482,12 +495,26 @@ namespace KYSQLhelper.ViewModels
 
         #endregion
 
+        #region SaveCsvFileCommand
+        public ICommand ClearComboBoxSelected { get; }
+
+        private bool CanClearComboBoxSelectedExecute(object p)
+        {
+            return true;
+        }
+
+        private void OnClearComboBoxSelectedExecute(object p)
+        {
+            Debug.Print(p.ToString());
+        }
+
+        #endregion
+
+
         #endregion
 
         public MainWindowViewModel()
         {
-            
-
             SettingPreLoadCommand = new LambdaCommand(OnSettingPreLoadCommandExecuted, CanSettingPreLoadCommandExecute);
             SqlConnectCommand = new LambdaCommand(OnSqlConnectCommandExecute, CanSqlConnectCommandExecute);
             DataBaseChangedCommand = new LambdaCommand(OnDataBaseChangedCommandExecute, CanDataBaseChangedCommandExecute);
@@ -495,6 +522,7 @@ namespace KYSQLhelper.ViewModels
             ExecuteQueryCommand = new LambdaCommand(OnExecuteQueryCommandExecute, CanExecuteQueryCommandExecute);
             GetLastResultCommand = new LambdaCommand(OnGetLastResultCommandExecute, CanExecuteQueryCommandExecute);
             SaveCsvFileCommand = new LambdaCommand(OnSaveCsvFileCommandExecute, CanSaveCsvFileCommandExecute);
+            ClearComboBoxSelected = new LambdaCommand(OnClearComboBoxSelectedExecute,CanClearComboBoxSelectedExecute);
         }
 
     }
