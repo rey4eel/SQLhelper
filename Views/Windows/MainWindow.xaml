@@ -46,9 +46,9 @@
             <Label Grid.Column="2" Grid.Row="0" Content="User" Margin="8 0 10 0" />
             <Label Grid.Column="3" Grid.Row="0" Content="Password" Margin="8 0 10 0" />
 
-            <TextBox Grid.Column="0" Grid.Row="1" Margin="10 0 10 0" Padding="2" Grid.ColumnSpan="2" Text="{Binding IpAdress}" />
-            <TextBox Grid.Column="2" Grid.Row="1" Margin="10 0 10 0" Padding="2" x:Name="UserName" Text="{Binding UserName}"/>
-            <TextBox Grid.Column="3" Grid.Row="1" Margin="10 0 10 0" Padding="2" x:Name="Password" Text="{Binding Password}"/>
+            <TextBox Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBoxStyleTemplate}"   Grid.ColumnSpan="2" Text="{Binding IpAdress}" />
+            <TextBox Grid.Column="2" Grid.Row="1" Style="{StaticResource TextBoxStyleTemplate}"   Text="{Binding UserName}"/>
+            <TextBox Grid.Column="3" Grid.Row="1" Style="{StaticResource TextBoxStyleTemplate}"   Text="{Binding Password}"/>
 
             <!--Button Style="{StaticResource RoundButtonTemplate}" FontWeight="Bold"  Grid.Column="4" Grid.Row="1" Content="Connect" Margin="10 0 10 0" x:Name="SqlConnectBtn" Click="SqlConnectBtn_Click" Command="{Binding SqlConnectCommand}"/-->
             <Button Style="{StaticResource ConnectButtonTemplate}" FontWeight="Bold"  Grid.Column="4" Grid.Row="1" Content="Connect" Margin="10 0 10 0" x:Name="SqlConnectBtn" Command="{Binding SqlConnectCommand}"/>
@@ -125,14 +125,15 @@
                 <!--" CheckBox Grid.Column="1" x:Name="SelectThirdItem" Content="Use" VerticalAlignment="Center"/-->
             </Grid>
 
-            <ComboBox Grid.Column="1" Grid.Row="1" Margin="10 0 10 0"  SelectedItem="{Binding Path=FromColumnSelectedPrime , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ColumnNamePrime}">
+            <ComboBox Grid.Column="1" Grid.Row="1" Margin="10 0 10 0" x:Name="FromColumnSelectedPrime" SelectedItem="{Binding Path=FromColumnSelectedPrime , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ColumnNamePrime}">
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseDoubleClick" >
+                    <i:EventTrigger EventName="MouseRightButtonDown" >
                         <i:InvokeCommandAction Command="{Binding ClearComboBoxSelected}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ComboBox>
-            <ComboBox Grid.Column="1" Grid.Row="3" Margin="10 0 10 0" x:Name="ComboBoxSelectSecond" SelectedItem="{Binding Path=FromColumnSelectedSecond , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ColumnName}"></ComboBox>
+            <ComboBox Grid.Column="1" Grid.Row="3" Margin="10 0 10 0" x:Name="ComboBoxSelectSecond" IsHitTestVisible="{Binding SecondSelectedIsAvalible}" IsEnabled="{Binding SecondSelectedIsAvalible}" SelectedItem="{Binding Path=FromColumnSelectedSecond , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ColumnName}">
+            </ComboBox>
             <ComboBox Grid.Column="1" Grid.Row="5" Margin="10 0 10 0" x:Name="ComboBoxSelectThird" SelectedItem="{Binding Path=FromColumnSelectedThird , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ColumnName}"></ComboBox>
             <!--#endregion-->
             <!--#region WHERE -->
@@ -154,8 +155,11 @@
             <!--#region Compare type -->
             <Label Grid.Column="3" Grid.Row="0" Content="Compare type" Margin="10 0"/>
             <Label Grid.Column="3" Grid.Row="2" Content="Input" Margin="10 0"/>
+            <Label Grid.Column="3" Grid.Row="4" Content="Between Second" Margin="10 0"/>
 
-            <TextBox Grid.Column="3" Grid.Row="3" Padding="2" x:Name="CompareInput" Text="{Binding CompareInput}" Margin="10 0 10 0" />
+            <TextBox Grid.Column="3" Grid.Row="3" Style="{StaticResource TextBoxStyleTemplate}"  Text="{Binding CompareInput}"/>
+            <TextBox Grid.Column="3" Grid.Row="5" Style="{StaticResource TextBoxStyleTemplate}"  Text="{Binding BetweenInput}"/>
+
 
             <ComboBox Grid.Column="3" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxCompareType" SelectedItem="{Binding Path=CompareTypeSelected , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding CompareType}"></ComboBox>
             <!--#endregion-->
@@ -180,7 +184,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBox Grid.Column="0" Height="25" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Margin="10 0 10 10" Text="{Binding ManualQueryInput}"/>
-            <Button  Content="Execute" Grid.Column="1" Style="{StaticResource RoundButtonTemplate}" Command="{Binding GetLastResultCommand}"  Margin="10 0 10 10" Background="red" FontWeight="Bold"/>
+            <Button  Content="Execute" Grid.Column="1" Style="{StaticResource RoundButtonTemplate}" Command="{Binding ExecuteQueryManualCommand}"  Margin="10 0 10 10" Background="red" FontWeight="Bold"/>
         </Grid>
 
         

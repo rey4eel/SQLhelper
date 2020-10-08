@@ -21,7 +21,7 @@ namespace KYSQLhelper.Infrastructure.Service
         public static void UpdateFail(ref string StatusBar, ref string StatusDetails)
         {
             StatusBar = "Error";
-            StatusDetails = "Chcek the Credentials = Connection Failed";
+            StatusDetails = "Check the Credentials = Connection Failed";
         }
     }
 }

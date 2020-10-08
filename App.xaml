@@ -5,6 +5,13 @@
              xmlns:local="clr-namespace:KYSQLhelper"
              StartupUri="Views/windows/MainWindow.xaml">
     <Application.Resources>
+        <Style x:Key="TextBoxStyleTemplate" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="LightBlue"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Margin" Value="10 0 10 0"/>
+            <Setter Property="Padding" Value="2"/>
+        </Style>
+        
         <Style x:Key="RoundButtonTemplate" TargetType="Button">
             <Setter Property="Background" Value="Gray"/>
             <Setter Property="Foreground" Value="White"/>

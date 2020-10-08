@@ -119,6 +119,25 @@ namespace KYSQLhelper.ViewModels
         }
         #endregion
 
+        #region SecondSelected status
+        private bool _secondSelectedIsAvalible = true;
+
+        public bool SecondSelectedIsAvalible
+        {
+            get { return _secondSelectedIsAvalible; }
+            set => Set(ref _secondSelectedIsAvalible, value);
+        }
+        #endregion
+
+        #region Mnaula query TextBox
+        private string _manualQueryInput;
+
+        public string ManualQueryInput
+        {
+            get { return _manualQueryInput; }
+            set => Set(ref _manualQueryInput, value);
+        }
+        #endregion
 
         #endregion
 
@@ -301,7 +320,7 @@ namespace KYSQLhelper.ViewModels
             if (SqlConnection.IsConnected)
             {
                 ConnectionBtnColor = Brushes.Green;
-
+          
                 StatusBar = "Connected";
                 StatusDetails = string.Empty;
 
@@ -404,6 +423,7 @@ namespace KYSQLhelper.ViewModels
 
             if (string.IsNullOrEmpty(selectType) || selectType == "ALL")
                 selectType = "*";
+             
 
             switch (CompareTypeSelected)
             {
@@ -495,21 +515,38 @@ namespace KYSQLhelper.ViewModels
 
         #endregion
 
-        #region SaveCsvFileCommand
-        public ICommand ClearComboBoxSelected { get; }
+        #region ClearComboBoxSelected
+        public ICommand ClearComboBoxSelectedCommnad { get; }
 
-        private bool CanClearComboBoxSelectedExecute(object p)
+        private bool CanClearComboBoxSelectedCommnadExecute(object p)
         {
             return true;
         }
 
-        private void OnClearComboBoxSelectedExecute(object p)
+        private void OnClearComboBoxSelectedCommnadExecute(object p)
         {
-            Debug.Print(p.ToString());
-        }
 
+        }
         #endregion
 
+        #region ExecuteQueryManualCommand
+        public ICommand ExecuteQueryManualCommand { get; }
+
+        private bool CanExecuteQueryManualCommandExecute(object p)
+        {
+            return true;
+        }
+
+        private void OnExecuteQueryManualCommandExecute(object p)
+        {
+            if (QueryData.Rows.Count > 0)
+                QueryData.Clear();
+
+            StatusDetails = $"Execute => {ManualQueryInput}";
+
+            QueryData = SqlConnection.ExecuteQuery(ManualQueryInput);
+        }
+        #endregion
 
         #endregion
 
@@ -522,7 +559,8 @@ namespace KYSQLhelper.ViewModels
             ExecuteQueryCommand = new LambdaCommand(OnExecuteQueryCommandExecute, CanExecuteQueryCommandExecute);
             GetLastResultCommand = new LambdaCommand(OnGetLastResultCommandExecute, CanExecuteQueryCommandExecute);
             SaveCsvFileCommand = new LambdaCommand(OnSaveCsvFileCommandExecute, CanSaveCsvFileCommandExecute);
-            ClearComboBoxSelected = new LambdaCommand(OnClearComboBoxSelectedExecute,CanClearComboBoxSelectedExecute);
+            ClearComboBoxSelectedCommnad = new LambdaCommand(OnClearComboBoxSelectedCommnadExecute, CanClearComboBoxSelectedCommnadExecute);
+            ExecuteQueryManualCommand = new LambdaCommand(OnExecuteQueryManualCommandExecute, CanExecuteQueryManualCommandExecute);
         }
 
     }
