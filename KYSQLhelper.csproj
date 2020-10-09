@@ -78,10 +78,9 @@
     </ApplicationDefinition>
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
     <Compile Include="Infrastructure\Commands\LambdaCommand.cs" />
-    <Compile Include="Infrastructure\Service\LogService.cs" />
-    <Compile Include="Infrastructure\Service\SQLservice.cs" />
     <Compile Include="Infrastructure\Service\ValidationService.cs" />
-    <Compile Include="Models\DataBaseServer.cs" />
+    <Compile Include="Models\DataBaseModel.cs" />
+    <Compile Include="Infrastructure\Service\LogService.cs" />
     <Compile Include="ViewModels\Base\ViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\Windows\MainWindow.xaml.cs">

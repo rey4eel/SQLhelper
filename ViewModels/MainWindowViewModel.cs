@@ -17,198 +17,59 @@ namespace KYSQLhelper.ViewModels
 {
     class MainWindowViewModel : ViewModel
     {
-        public SQLService SqlConnection { get; set; }
-
-        #region VIEW RESOURSE
-
-        #region Main window title
-
-        /// <summary>
-        /// WindowTitle
-        /// </summary>
+        private DataBaseModel _dataBaseModel = new DataBaseModel();
+        private LogData _log = new LogData();
+        private DataTable _queryData = new DataTable();
         private string _Title = "SQLhelper";
-
-        public string Title
-        {
-            get => _Title;
-            set => Set(ref _Title, value);
-        }
-        #endregion
-
-        #region CompareInput TextBox
-
-        /// <summary>
-        /// WindowTitle
-        /// </summary>
         private string _compareInput;
-
-        public string CompareInput
-        {
-            get => _compareInput;
-            set => Set(ref _compareInput, value);
-        }
-        #endregion
-
-        #region Ipadress TextBox
-        private string _ipAdress;
-
-        public string IpAdress
-        {
-            get { return _ipAdress; }
-            set => Set(ref _ipAdress, value);
-        }
-        #endregion
-
-        #region User Name TextBox
-        private string _userName;
-
-        public string UserName
-        {
-            get { return _userName; }
-            set => Set(ref _userName, value);
-        }
-        #endregion
-
-        #region Password TextBox
-        private string _password;
-
-        public string Password
-        {
-            get { return _password; }
-            set => Set(ref _password, value);
-        }
-        #endregion
-
-        #region Connection Button 
         private Brush _ConnectionBtnColor = Brushes.Gray;
-
-        public Brush ConnectionBtnColor
-        {
-            get { return _ConnectionBtnColor; }
-            set => Set(ref _ConnectionBtnColor, value);
-        }
-        #endregion
-
-        #region Status Bar TextBox
-        private string _statusBar;
-
-        public string StatusBar
-        {
-            get { return _statusBar; }
-            set => Set(ref _statusBar, value);
-        }
-        #endregion
-
-        #region StatusDetails TextBox
-        private string _statusDetails;
-
-        public string StatusDetails
-        {
-            get { return _statusDetails; }
-            set => Set(ref _statusDetails, value);
-        }
-        #endregion
-
-        #region ProgressBar
-        private int _progressBar = 0;
-
-        public int ProgressBar
-        {
-            get { return _progressBar; }
-            set => Set(ref _progressBar, value);
-        }
-        #endregion
-
-        #region SecondSelected status
         private bool _secondSelectedIsAvalible = true;
-
-        public bool SecondSelectedIsAvalible
-        {
-            get { return _secondSelectedIsAvalible; }
-            set => Set(ref _secondSelectedIsAvalible, value);
-        }
-        #endregion
-
-        #region Mnaula query TextBox
         private string _manualQueryInput;
 
-        public string ManualQueryInput
+
+        public DataBaseModel DataBaseModel
         {
-            get { return _manualQueryInput; }
-            set => Set(ref _manualQueryInput, value);
+            get { return _dataBaseModel; }
+            set => Set(ref _dataBaseModel, value);
         }
-        #endregion
-
-        #endregion
-
-        #region data bases from the server
-        private ObservableCollection<string> _dbNames = new ObservableCollection<string>();
-
-        public ObservableCollection<string> DbNames
+        public LogData log
         {
-            get { return _dbNames; }
-            set => Set(ref _dbNames, value);
+            get { return _log; }
+            set => Set(ref _log, value);
         }
-
-        #endregion
-
-        #region Tables from the DB
-        private ObservableCollection<string> _tableNames = new ObservableCollection<string>();
-
-        public ObservableCollection<string> TableNames
-        {
-            get { return _tableNames; }
-            set => Set(ref _tableNames, value);
-        }
-
-        #endregion
-
-        #region Column name for Prime Combo
-        private ObservableCollection<string> _columnNamePrime = new ObservableCollection<string>() { "ALL" };
-
-        public ObservableCollection<string> ColumnNamePrime
-        {
-            get { return _columnNamePrime; }
-            set => Set(ref _columnNamePrime, value);
-        }
-        #endregion
-
-        #region Column name from table
-        private ObservableCollection<string> _columnName = new ObservableCollection<string>();
-
-        public ObservableCollection<string> ColumnName
-        {
-            get { return _columnName; }
-            set => Set(ref _columnName, value);
-        }
-
-        private ObservableCollection<string> _compareType = new ObservableCollection<string>() { "LIKE", "BETWEEN", "EQUAL" };
-
-        public ObservableCollection<string> CompareType
-        {
-            get { return _compareType; }
-            set => Set(ref _compareType, value);
-        }
-
-        private ObservableCollection<string> _orderBy = new ObservableCollection<string>() { "ASC", "DESC" };
-
-        public ObservableCollection<string> OrderBy
-        {
-            get { return _orderBy; }
-            set => Set(ref _orderBy, value);
-        }
-
-        private DataTable _queryData = new DataTable();
-
         public DataTable QueryData
         {
             get { return _queryData; }
             set => Set(ref _queryData, value);
         }
+        public string Title
+        {
+            get => _Title;
+            set => Set(ref _Title, value);
+        }
+        public string CompareInput
+        {
+            get => _compareInput;
+            set => Set(ref _compareInput, value);
+        }
+        public Brush ConnectionBtnColor
+        {
+            get { return _ConnectionBtnColor; }
+            set => Set(ref _ConnectionBtnColor, value);
+        }
+        public bool SecondSelectedIsAvalible
+        {
+            get { return _secondSelectedIsAvalible; }
+            set => Set(ref _secondSelectedIsAvalible, value);
+        }
+        public string ManualQueryInput
+        {
+            get { return _manualQueryInput; }
+            set => Set(ref _manualQueryInput, value);
+        }
 
-        #endregion
+        #region ComBoxFromTableSelectedvalue
 
-        #region ComBoxFromSelectedvalue
         private string _fromSelected;
 
         public string FromSelected
@@ -217,9 +78,6 @@ namespace KYSQLhelper.ViewModels
             set => Set(ref _fromSelected, value);
         }
 
-        #endregion
-
-        #region ComBoxFromTableSelectedvalue
         private string _fromTableSelected;
 
         public string FromTableSelected
@@ -290,57 +148,48 @@ namespace KYSQLhelper.ViewModels
 
         #region Get setting from KYconfig
         public ICommand SettingPreLoadCommand { get; }
-
         private bool CanSettingPreLoadCommandExecute(object p) => true;
-
         private void OnSettingPreLoadCommandExecuted(object p)
         {
-            SQLService.GetCredentialsFromConfig();
-            IpAdress = SQLService.IpAdress;
-            UserName = SQLService.UserName;
-            Password = SQLService.Password;
+            
         }
         #endregion
 
         #region SQLconnect
         public ICommand SqlConnectCommand { get; }
-
         private bool CanSqlConnectCommandExecute(object p)
         {
             return true;
         }
-
         private void OnSqlConnectCommandExecute(object p)
         {
-            if (DbNames.Count > 0)
-                DbNames.Clear();
+            if (DataBaseModel.DbNames.Count > 0)
+                DataBaseModel.DbNames.Clear();
 
-            SqlConnection = new SQLService(IpAdress, UserName, Password);
+            DataBaseModel.CheckConnection();
 
-            if (SqlConnection.IsConnected)
+            if (DataBaseModel.IsConnected)
             {
                 ConnectionBtnColor = Brushes.Green;
-          
-                StatusBar = "Connected";
-                StatusDetails = string.Empty;
+
+                log.ConnectSuccess();
 
                 string query = "select name from sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb','KY_CodeLib');";
 
-                DataTable SqlResponce = SqlConnection.ExecuteQuery(query);
+                DataTable SqlResponce = DataBaseModel.ExecuteQuery(query);
 
                 for (int i = 0; i < SqlResponce.Rows.Count; i++)
                 {
-                    DbNames.Add(SqlResponce.Rows[i]["name"].ToString());
+                    DataBaseModel.DbNames.Add(SqlResponce.Rows[i]["name"].ToString());
                 }
             }
             else
             {
-                StatusBar = "Error";
-                StatusDetails = "Chcek the Credentials = Connection Failed";
+                log.ConnectFail();
                 ConnectionBtnColor = Brushes.Gray;
-                if (DbNames.Count > 0)
+                if (DataBaseModel.DbNames.Count > 0)
                 {
-                    DbNames.Clear();
+                    DataBaseModel.DbNames.Clear();
                     FromSelected = string.Empty;
                 }
 
@@ -352,67 +201,57 @@ namespace KYSQLhelper.ViewModels
 
         #region DataBaseChangedCommand
         public ICommand DataBaseChangedCommand { get; }
-
         private bool CanDataBaseChangedCommandExecute(object p)
         {
             return true;
         }
-
         private void OnDataBaseChangedCommandExecute(object p)
         {
-            if (TableNames.Count > 0)
-                TableNames.Clear();
+            if (DataBaseModel.TableNames.Count > 0)
+                DataBaseModel.TableNames.Clear();
 
             string query = string.Format("SELECT name FROM {0}.sys.tables WHERE name LIKE '%TB%'", FromSelected);
 
-            StatusDetails = $"Execute => {query}";
-
-            DataTable SqlResponce = SqlConnection.ExecuteQuery(query);
-
+            DataTable SqlResponce = DataBaseModel.ExecuteQuery(query);
+       
             for (int i = 0; i < SqlResponce.Rows.Count; i++)
             {
-                TableNames.Add(SqlResponce.Rows[i]["name"].ToString());
+                DataBaseModel.TableNames.Add(SqlResponce.Rows[i]["name"].ToString());
             }
-        }
 
+            log.QueryExecuteSuccess(query);
+        }
         #endregion
 
         #region TableChangedCommand
         public ICommand TableChangedCommand { get; }
-
         private bool CanTableChangedCommandExecute(object p)
         {
             return true;
         }
-
         private void OnTableChangedCommandExecute(object p)
         {
-            if (ColumnName.Count > 0)
-                ColumnName.Clear();
+            if (DataBaseModel.ColumnName.Count > 0)
+                DataBaseModel.ColumnName.Clear();
 
             string query = string.Format("SELECT TOP 1 * FROM {0}.dbo.{1}", FromSelected, FromTableSelected);
 
-            StatusDetails = $"Execute => {query}";
-
-            DataTable SqlResponce = SqlConnection.ExecuteQuery(query);
+            DataTable SqlResponce = DataBaseModel.ExecuteQuery(query);
 
             for (int i = 0; i < SqlResponce.Columns.Count; i++)
             {
-                ColumnNamePrime.Add(SqlResponce.Columns[i].ColumnName);
-                ColumnName.Add(SqlResponce.Columns[i].ColumnName);
+                DataBaseModel.ColumnNamePrime.Add(SqlResponce.Columns[i].ColumnName);
+                DataBaseModel.ColumnName.Add(SqlResponce.Columns[i].ColumnName);
             }
         }
-
         #endregion
 
         #region ExecuteQueryCommand
         public ICommand ExecuteQueryCommand { get; }
-
         private bool CanExecuteQueryCommandExecute(object p)
         {
             return true;
         }
-
         private void OnExecuteQueryCommandExecute(object p)
         {
 
@@ -453,42 +292,34 @@ namespace KYSQLhelper.ViewModels
             if (!string.IsNullOrWhiteSpace(OrderBySelected))
                 query += " " + OrderBySelected;
 
-            StatusDetails = $"Execute => {query}";
 
-            QueryData = SqlConnection.ExecuteQuery(query);        
+            QueryData = DataBaseModel.ExecuteQuery(query);        
         }
 
         #endregion
 
         #region GetLastResultCommand
         public ICommand GetLastResultCommand { get; }
-
         private bool CanGetLastResultCommandExecute(object p)
         {
             return true;
         }
-
         private void OnGetLastResultCommandExecute(object p)
         {
 
             if (QueryData.Rows.Count > 0)
                 QueryData.Clear();
 
-            StatusDetails = $"Execute => {"SELECT TOP 1 * FROM KY_AOI.dbo.TB_AOIPCB ORDER BY StartDateTime DESC"}";
-
-            QueryData = SqlConnection.ExecuteQuery("SELECT TOP 1 * FROM KY_AOI.dbo.TB_AOIPCB ORDER BY StartDateTime DESC");
+            QueryData = DataBaseModel.ExecuteQuery("SELECT TOP 1 * FROM KY_AOI.dbo.TB_AOIPCB ORDER BY StartDateTime DESC");
         }
-
         #endregion
 
         #region SaveCsvFileCommand
         public ICommand SaveCsvFileCommand { get; }
-
         private bool CanSaveCsvFileCommandExecute(object p)
         {
             return true;
         }
-
         private void OnSaveCsvFileCommandExecute(object p)
         {
 
@@ -507,22 +338,17 @@ namespace KYSQLhelper.ViewModels
 
             string path = @"C:\Users\vardan.saakian\Desktop\sqlData.csv";
 
-            StatusDetails = $"File will be saved => {path}";
-
             File.WriteAllText(path, sb.ToString());
 
         }
-
         #endregion
 
         #region ClearComboBoxSelected
         public ICommand ClearComboBoxSelectedCommnad { get; }
-
         private bool CanClearComboBoxSelectedCommnadExecute(object p)
         {
             return true;
         }
-
         private void OnClearComboBoxSelectedCommnadExecute(object p)
         {
 
@@ -531,20 +357,16 @@ namespace KYSQLhelper.ViewModels
 
         #region ExecuteQueryManualCommand
         public ICommand ExecuteQueryManualCommand { get; }
-
         private bool CanExecuteQueryManualCommandExecute(object p)
         {
             return true;
         }
-
         private void OnExecuteQueryManualCommandExecute(object p)
         {
             if (QueryData.Rows.Count > 0)
                 QueryData.Clear();
 
-            StatusDetails = $"Execute => {ManualQueryInput}";
-
-            QueryData = SqlConnection.ExecuteQuery(ManualQueryInput);
+            QueryData = DataBaseModel.ExecuteQuery(ManualQueryInput);
         }
         #endregion
 

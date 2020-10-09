@@ -8,11 +8,10 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:local="clr-namespace:KYSQLhelper"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="640" Width="800" WindowStartupLocation="CenterScreen" x:Name="App"
+        Title="{Binding Title}" Height="630" Width="800" WindowStartupLocation="CenterScreen" x:Name="App"
         Icon="/Resourse/Ico/sqlicon.ico"
-        ResizeMode="NoResize"
         >
-    
+
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding SettingPreLoadCommand}" />
@@ -23,225 +22,232 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
 
-    <StackPanel>
-        
-        <!--#region Connection -->
-        <TextBlock Text="Connection credentials" FontWeight="Bold" Margin="10 5"/>
+    <Grid>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15*"/>
-                <ColumnDefinition Width="34*"/>
-                <ColumnDefinition Width="49*"/>
-                <ColumnDefinition Width="49*"/>
-                <ColumnDefinition Width="49*"/>
-            </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="579*"/>
+            <RowDefinition Height="22*"/>
+        </Grid.RowDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
 
-            <Label Grid.Column="0" Grid.Row="0" Content="Ip adress" Margin="8 0 10 0" Grid.ColumnSpan="2" />
-            <Label Grid.Column="2" Grid.Row="0" Content="User" Margin="8 0 10 0" />
-            <Label Grid.Column="3" Grid.Row="0" Content="Password" Margin="8 0 10 0" />
+            <!--#region Connection -->
+            <TextBlock Text="Connection credentials" FontWeight="Bold" Margin="10 5"/>
 
-            <TextBox Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBoxStyleTemplate}"   Grid.ColumnSpan="2" Text="{Binding IpAdress}" />
-            <TextBox Grid.Column="2" Grid.Row="1" Style="{StaticResource TextBoxStyleTemplate}"   Text="{Binding UserName}"/>
-            <TextBox Grid.Column="3" Grid.Row="1" Style="{StaticResource TextBoxStyleTemplate}"   Text="{Binding Password}"/>
-
-            <!--Button Style="{StaticResource RoundButtonTemplate}" FontWeight="Bold"  Grid.Column="4" Grid.Row="1" Content="Connect" Margin="10 0 10 0" x:Name="SqlConnectBtn" Click="SqlConnectBtn_Click" Command="{Binding SqlConnectCommand}"/-->
-            <Button Style="{StaticResource ConnectButtonTemplate}" FontWeight="Bold"  Grid.Column="4" Grid.Row="1" Content="Connect" Margin="10 0 10 0" x:Name="SqlConnectBtn" Command="{Binding SqlConnectCommand}"/>
-        </Grid>
-
-        
-        <!--#endregion-->
-        <!--#region Query -->
-        <TextBlock Text="Search Option" FontWeight="Bold" Margin="10 10"/>
-        <Grid>
-            <!--#region Col defenition -->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <!--#endregion-->
-            <!--#region Row defenition -->
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <!--#endregion-->
-            <!--#region FROM -->
-            <Label Grid.Column="0" Grid.Row="0" Content="From DB" Margin="10 0"/>
-            <ComboBox Grid.Column="0" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxDB" SelectedItem="{Binding Path=FromSelected , Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DbNames}">
-                <i:Interaction.Triggers>
-                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding DataBaseChangedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ComboBox>
-
-            <Label Grid.Column="0" Grid.Row="2" Content="From Table" Margin="10 0"/>
-            <ComboBox Grid.Column="0" Grid.Row="3" Margin="10 0 10 0" x:Name="ComboBoxTable" SelectedItem="{Binding Path=FromTableSelected , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding TableNames}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding TableChangedCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ComboBox>
-
-            <!--#endregion-->
-            <!--#region SELECT -->
-            <Label Grid.Column="1" Grid.Row="0" Content="Select" Margin="10 0"/>
-            
-
-            <Grid Grid.Column="1" Grid.Row="2">
+            <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="34*"/>
+                    <ColumnDefinition Width="49*"/>
+                    <ColumnDefinition Width="49*"/>
+                    <ColumnDefinition Width="49*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Content="Ip adress" Margin="8 0 10 0" Grid.ColumnSpan="2" />
+                <Label Grid.Column="2" Grid.Row="0" Content="User" Margin="8 0 10 0" />
+                <Label Grid.Column="3" Grid.Row="0" Content="Password" Margin="8 0 10 0" />
+
+                <TextBox Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBoxStyleTemplate}"   Grid.ColumnSpan="2" Text="{Binding Path=DataBaseModel.IpAdress ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Column="2" Grid.Row="1" Style="{StaticResource TextBoxStyleTemplate}"   Text="{Binding DataBaseModel.UserName ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Column="3" Grid.Row="1" Style="{StaticResource TextBoxStyleTemplate}"   Text="{Binding DataBaseModel.Password ,Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!--Button Style="{StaticResource RoundButtonTemplate}" FontWeight="Bold"  Grid.Column="4" Grid.Row="1" Content="Connect" Margin="10 0 10 0" x:Name="SqlConnectBtn" Click="SqlConnectBtn_Click" Command="{Binding SqlConnectCommand}"/-->
+                <Button Style="{StaticResource ConnectButtonTemplate}" FontWeight="Bold"  Grid.Column="4" Grid.Row="1" Content="Connect" Margin="10 0 10 0" x:Name="SqlConnectBtn" Command="{Binding SqlConnectCommand}"/>
+            </Grid>
+
+
+            <!--#endregion-->
+            <!--#region Query -->
+            <TextBlock Text="Search Option" FontWeight="Bold" Margin="10 10"/>
+            <Grid>
+                <!--#region Col defenition -->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                <!--#endregion-->
+                <!--#region Row defenition -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--#endregion-->
+                <!--#region FROM -->
+                <Label Grid.Column="0" Grid.Row="0" Content="From DB" Margin="10 0"/>
+                <ComboBox Grid.Column="0" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxDB" SelectedItem="{Binding Path=FromSelected , Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.DbNames}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding DataBaseChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
 
-                <Label Grid.Column="0"  Content="AND" Margin="10 0"/>
-                <!--" CheckBox Grid.Column="1" x:Name="SelectSecondItem" Content="Use" VerticalAlignment="Center"  /-->
+                <Label Grid.Column="0" Grid.Row="2" Content="From Table" Margin="10 0"/>
+                <ComboBox Grid.Column="0" Grid.Row="3" Margin="10 0 10 0" x:Name="ComboBoxTable" SelectedItem="{Binding Path=FromTableSelected , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.TableNames}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding TableChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+
+                <!--#endregion-->
+                <!--#region SELECT -->
+                <Label Grid.Column="1" Grid.Row="0" Content="Select" Margin="10 0"/>
+
+
+                <Grid Grid.Column="1" Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0"  Content="AND" Margin="10 0"/>
+                    <!--" CheckBox Grid.Column="1" x:Name="SelectSecondItem" Content="Use" VerticalAlignment="Center"  /-->
+                </Grid>
+
+
+
+                <Grid Grid.Column="1" Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0"  Content="AND" Margin="10 0"/>
+                    <!--" CheckBox Grid.Column="1" x:Name="SelectThirdItem" Content="Use" VerticalAlignment="Center"/-->
+                </Grid>
+
+                <ComboBox Grid.Column="1" Grid.Row="1" Margin="10 0 10 0" x:Name="FromColumnSelectedPrime" SelectedItem="{Binding Path=FromColumnSelectedPrime , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnNamePrime}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseRightButtonDown" >
+                            <i:InvokeCommandAction Command="{Binding ClearComboBoxSelected}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <ComboBox Grid.Column="1" Grid.Row="3" Margin="10 0 10 0" x:Name="ComboBoxSelectSecond" IsHitTestVisible="{Binding SecondSelectedIsAvalible}" IsEnabled="{Binding SecondSelectedIsAvalible}" SelectedItem="{Binding Path=FromColumnSelectedSecond , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnName}">
+                </ComboBox>
+                <ComboBox Grid.Column="1" Grid.Row="5" Margin="10 0 10 0" x:Name="ComboBoxSelectThird" SelectedItem="{Binding Path=FromColumnSelectedThird , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnName}"></ComboBox>
+                <!--#endregion-->
+                <!--#region WHERE -->
+
+
+                <Grid Grid.Column="2" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0"  Content="Where" Margin="10 0"/>
+                </Grid>
+
+                <ComboBox Grid.Column="2" Grid.Row="1" Margin="10 0 10 0" SelectedItem="{Binding Path=FromWhereSelected ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnName}"></ComboBox>
+                <!--#endregion-->
+
+                <!--Compare type-->
+                <!--#region Compare type -->
+                <Label Grid.Column="3" Grid.Row="0" Content="Compare type" Margin="10 0"/>
+                <Label Grid.Column="3" Grid.Row="2" Content="Input" Margin="10 0"/>
+                <Label Grid.Column="3" Grid.Row="4" Content="Between Second" Margin="10 0"/>
+
+                <TextBox Grid.Column="3" Grid.Row="3" Style="{StaticResource TextBoxStyleTemplate}"  Text="{Binding CompareInput}"/>
+                <TextBox Grid.Column="3" Grid.Row="5" Style="{StaticResource TextBoxStyleTemplate}"  Text="{Binding BetweenInput}"/>
+
+
+                <ComboBox Grid.Column="3" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxCompareType" SelectedItem="{Binding Path=CompareTypeSelected , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.CompareType}"></ComboBox>
+                <!--#endregion-->
+
+                <!--Sort by-->
+                <Label Grid.Column="4" Grid.Row="0" Content="Sort By" Margin="10 0"/>
+                <ComboBox Grid.Column="4" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxSort" SelectedItem="{Binding Path=SortBySelected , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnName}"></ComboBox>
+
+                <!--Order by-->
+                <Label Grid.Column="5" Grid.Row="0" Content="Order By" Margin="10 0"/>
+                <ComboBox Grid.Column="5" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxOrder" SelectedItem="{Binding Path=OrderBySelected , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.OrderBy}"></ComboBox>
+
             </Grid>
-            
-            
+            <!--#endregion-->
 
-            <Grid Grid.Column="1" Grid.Row="4">
+
+            <Expander Grid.Column="0" Header="Manual Query Command" FontWeight="Bold" Margin="10 10">
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0" Height="25" Style="{StaticResource TextBoxStyleTemplate}" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"  Text="{Binding ManualQueryInput}"/>
+                    <Button  Content="Execute" Grid.Column="1" Style="{StaticResource RoundButtonTemplate}" Command="{Binding ExecuteQueryManualCommand}"  Margin="10 0 10 0" Background="red" FontWeight="Bold"/>
+                </Grid>
+            </Expander>
+
+
+            <!--#region Output table -->
+            <TextBlock Text="Output" FontWeight="Bold" Margin="10 10"/>
+
+            <DataGrid x:Name="dataGrid" CanUserAddRows="False" MinHeight="150" MaxHeight="150" ItemsSource="{Binding QueryData}" AutoGenerateColumns="True" Margin="10 0 10 10"/>
+
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
-
-                <Label Grid.Column="0"  Content="AND" Margin="10 0"/>
-                <!--" CheckBox Grid.Column="1" x:Name="SelectThirdItem" Content="Use" VerticalAlignment="Center"/-->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                </Grid.RowDefinitions>
+                <Button Content="Export CSV" Style="{StaticResource RoundButtonTemplate}" Command="{Binding SaveCsvFileCommand}" Grid.Column="1" Margin="0 10 10 0" FontWeight="Bold"/>
+                <Button Content="Execute Query" Style="{StaticResource RoundButtonTemplate}" Command="{Binding ExecuteQueryCommand}" Grid.Column="2" Margin="0 10 10 0" Background="red" FontWeight="Bold"/>
+                <Button Content="Get last Data" Style="{StaticResource RoundButtonTemplate}" Command="{Binding GetLastResultCommand}" Grid.Column="3" Margin="0 10 10 0" Background="red" FontWeight="Bold"/>
+                <Button Content="Clear Table" Style="{StaticResource RoundButtonTemplate}"  Grid.Column="4" Margin="0 10 10 0" x:Name="ClearTable"/>
             </Grid>
-
-            <ComboBox Grid.Column="1" Grid.Row="1" Margin="10 0 10 0" x:Name="FromColumnSelectedPrime" SelectedItem="{Binding Path=FromColumnSelectedPrime , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ColumnNamePrime}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseRightButtonDown" >
-                        <i:InvokeCommandAction Command="{Binding ClearComboBoxSelected}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ComboBox>
-            <ComboBox Grid.Column="1" Grid.Row="3" Margin="10 0 10 0" x:Name="ComboBoxSelectSecond" IsHitTestVisible="{Binding SecondSelectedIsAvalible}" IsEnabled="{Binding SecondSelectedIsAvalible}" SelectedItem="{Binding Path=FromColumnSelectedSecond , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ColumnName}">
-            </ComboBox>
-            <ComboBox Grid.Column="1" Grid.Row="5" Margin="10 0 10 0" x:Name="ComboBoxSelectThird" SelectedItem="{Binding Path=FromColumnSelectedThird , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ColumnName}"></ComboBox>
             <!--#endregion-->
-            <!--#region WHERE -->
+        </StackPanel>
 
+        <StatusBar  Grid.Row="1" VerticalAlignment="Bottom" Height="22">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <!--TextBlock Text="{Binding StatusBar}" /-->
+                <TextBlock Text="{Binding log.Status}" />
 
-            <Grid Grid.Column="2" Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+            </StatusBarItem>
+            <Separator Grid.Column="1" />
+            <StatusBarItem Grid.Column="2">
+                <TextBlock Text="{Binding log.StatusDetails , Mode=TwoWay}" />
+            </StatusBarItem>
+            <Separator Grid.Column="3" />
+            <StatusBarItem Grid.Column="4">
+                <ProgressBar Value="{Binding log.ProgressBar , Mode=TwoWay}" Width="90" Height="16" />
+            </StatusBarItem>
+        </StatusBar>
 
-                <Label Grid.Column="0"  Content="Where" Margin="10 0"/>
-            </Grid>
-
-            <ComboBox Grid.Column="2" Grid.Row="1" Margin="10 0 10 0" SelectedItem="{Binding Path=FromWhereSelected ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ColumnName}"></ComboBox>
-            <!--#endregion-->
-
-            <!--Compare type-->
-            <!--#region Compare type -->
-            <Label Grid.Column="3" Grid.Row="0" Content="Compare type" Margin="10 0"/>
-            <Label Grid.Column="3" Grid.Row="2" Content="Input" Margin="10 0"/>
-            <Label Grid.Column="3" Grid.Row="4" Content="Between Second" Margin="10 0"/>
-
-            <TextBox Grid.Column="3" Grid.Row="3" Style="{StaticResource TextBoxStyleTemplate}"  Text="{Binding CompareInput}"/>
-            <TextBox Grid.Column="3" Grid.Row="5" Style="{StaticResource TextBoxStyleTemplate}"  Text="{Binding BetweenInput}"/>
-
-
-            <ComboBox Grid.Column="3" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxCompareType" SelectedItem="{Binding Path=CompareTypeSelected , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding CompareType}"></ComboBox>
-            <!--#endregion-->
-
-            <!--Sort by-->
-            <Label Grid.Column="4" Grid.Row="0" Content="Sort By" Margin="10 0"/>
-            <ComboBox Grid.Column="4" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxSort" SelectedItem="{Binding Path=SortBySelected , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ColumnName}"></ComboBox>
-
-            <!--Order by-->
-            <Label Grid.Column="5" Grid.Row="0" Content="Order By" Margin="10 0"/>
-            <ComboBox Grid.Column="5" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxOrder" SelectedItem="{Binding Path=OrderBySelected , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding OrderBy}"></ComboBox>
-
-        </Grid>
-        <!--#endregion-->
-
-
-        <TextBlock Text="Manual Query Command" FontWeight="Bold" Margin="10 10"/>
-        <Grid VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="150"/>
-            </Grid.ColumnDefinitions>
-
-            <TextBox Grid.Column="0" Height="25" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Margin="10 0 10 10" Text="{Binding ManualQueryInput}"/>
-            <Button  Content="Execute" Grid.Column="1" Style="{StaticResource RoundButtonTemplate}" Command="{Binding ExecuteQueryManualCommand}"  Margin="10 0 10 10" Background="red" FontWeight="Bold"/>
-        </Grid>
-
-        
-
-
-        <!--#region Output table -->
-        <TextBlock Text="Output" FontWeight="Bold" Margin="10 10"/>
-
-        <DataGrid x:Name="dataGrid" CanUserAddRows="False" MinHeight="150" MaxHeight="150" ItemsSource="{Binding QueryData}" AutoGenerateColumns="True" Margin="10 0 10 10"/>
-
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="120"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="35"/>
-            </Grid.RowDefinitions>
-            <Button Content="Export CSV" Style="{StaticResource RoundButtonTemplate}" Command="{Binding SaveCsvFileCommand}" Grid.Column="1" Margin="0 10 10 0" FontWeight="Bold"/>
-            <Button Content="Execute Query" Style="{StaticResource RoundButtonTemplate}" Command="{Binding ExecuteQueryCommand}" Grid.Column="2" Margin="0 10 10 0" Background="red" FontWeight="Bold"/>
-            <Button Content="Get last Data" Style="{StaticResource RoundButtonTemplate}" Command="{Binding GetLastResultCommand}" Grid.Column="3" Margin="0 10 10 0" Background="red" FontWeight="Bold"/>
-            <Button Content="Clear Table" Style="{StaticResource RoundButtonTemplate}"  Grid.Column="4" Margin="0 10 10 0" x:Name="ClearTable"/>
-        </Grid>
-        <!--#endregion-->
- 
-
-       
-            <StatusBar Margin="0 20" VerticalAlignment="Bottom">
-                <StatusBar.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="100" />
-                            </Grid.ColumnDefinitions>
-                        </Grid>
-                    </ItemsPanelTemplate>
-                </StatusBar.ItemsPanel>
-                <StatusBarItem>
-                    <TextBlock Text="{Binding StatusBar}" />
-                </StatusBarItem>
-                <Separator Grid.Column="1" />
-                <StatusBarItem Grid.Column="2">
-                    <TextBlock Text="{Binding StatusDetails}" />
-                </StatusBarItem>
-                <Separator Grid.Column="3" />
-                <StatusBarItem Grid.Column="4">
-                    <ProgressBar Value="{Binding ProgressBar , Mode=TwoWay}" Width="90" Height="16" />
-                </StatusBarItem>
-            </StatusBar>
-
-    </StackPanel>
+    </Grid>
 
 </Window>
