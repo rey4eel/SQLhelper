@@ -7,8 +7,14 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:local="clr-namespace:KYSQLhelper"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"      
+        SizeToContent="Height"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="630" Width="800" WindowStartupLocation="CenterScreen" x:Name="App"
+        Title="{Binding Title}" Height="730" Width="850" WindowStartupLocation="CenterScreen" x:Name="App"
         Icon="/Resourse/Ico/sqlicon.ico"
         >
 
@@ -33,31 +39,34 @@
 
             <!--#region Connection -->
             <TextBlock Text="Connection credentials" FontWeight="Bold" Margin="10 5"/>
-
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="15*"/>
-                    <ColumnDefinition Width="34*"/>
-                    <ColumnDefinition Width="49*"/>
-                    <ColumnDefinition Width="49*"/>
-                    <ColumnDefinition Width="49*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Label Grid.Column="0" Grid.Row="0" Content="Ip adress" Margin="8 0 10 0" Grid.ColumnSpan="2" />
-                <Label Grid.Column="2" Grid.Row="0" Content="User" Margin="8 0 10 0" />
-                <Label Grid.Column="3" Grid.Row="0" Content="Password" Margin="8 0 10 0" />
-
-                <TextBox Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBoxStyleTemplate}"   Grid.ColumnSpan="2" Text="{Binding Path=DataBaseModel.IpAdress ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Grid.Column="2" Grid.Row="1" Style="{StaticResource TextBoxStyleTemplate}"   Text="{Binding DataBaseModel.UserName ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Grid.Column="3" Grid.Row="1" Style="{StaticResource TextBoxStyleTemplate}"   Text="{Binding DataBaseModel.Password ,Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"/>
-
-                <!--Button Style="{StaticResource RoundButtonTemplate}" FontWeight="Bold"  Grid.Column="4" Grid.Row="1" Content="Connect" Margin="10 0 10 0" x:Name="SqlConnectBtn" Click="SqlConnectBtn_Click" Command="{Binding SqlConnectCommand}"/-->
-                <Button Style="{StaticResource ConnectButtonTemplate}" FontWeight="Bold"  Grid.Column="4" Grid.Row="1" Content="Connect" Margin="10 0 10 0" x:Name="SqlConnectBtn" Command="{Binding SqlConnectCommand}"/>
+                <StackPanel Grid.Column="0" Margin="10">
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" 
+                             VerticalAlignment="Top"
+                             materialDesign:HintAssist.Hint="IPadress"
+                             Text="{Binding Path=DataBaseModel.IpAdress ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="10">
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" 
+                             VerticalAlignment="Top"
+                             materialDesign:HintAssist.Hint="User Name"
+                             Text="{Binding DataBaseModel.UserName ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Margin="10">
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" 
+                             VerticalAlignment="Top"
+                             materialDesign:HintAssist.Hint="Password"
+                             Text="{Binding DataBaseModel.Password ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <materialDesign:Badged VerticalAlignment="Center" Badge="{Binding ConnectionStatus}" BadgeColorZoneMode="Dark" BadgeBackground="{Binding ConnectionBtnColor}" Grid.Column="3" Grid.Row="1">
+                    <Button Command="{Binding SqlConnectCommand}">Connect</Button>
+                </materialDesign:Badged>
             </Grid>
 
 
@@ -80,117 +89,224 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <!--#endregion-->
                 <!--#region FROM -->
-                <Label Grid.Column="0" Grid.Row="0" Content="From DB" Margin="10 0"/>
-                <ComboBox Grid.Column="0" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxDB" SelectedItem="{Binding Path=FromSelected , Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.DbNames}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding DataBaseChangedCommand}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ComboBox>
 
-                <Label Grid.Column="0" Grid.Row="2" Content="From Table" Margin="10 0"/>
-                <ComboBox Grid.Column="0" Grid.Row="3" Margin="10 0 10 0" x:Name="ComboBoxTable" SelectedItem="{Binding Path=FromTableSelected , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.TableNames}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding TableChangedCommand}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ComboBox>
+                <StackPanel Grid.Column="0" Grid.Row="0" Margin="10 0 10 10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox x:Name="ChooseDbChecked" IsChecked="True" Margin="0,0,0,8" Content="Enabled" />
+                        <!--Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Grid.Column="1" Command="{Binding ClearComboBoxSelectedCommnad}"/-->
+                    </Grid>
+                    <ComboBox Style="{StaticResource MaterialDesignFilledComboBox}" x:Name="FilledComboBox" 
+                                SelectedItem="{Binding Path=FromSelected , Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.DbNames}"                
+                                IsEnabled="{Binding Path=IsChecked, ElementName=ChooseDbChecked}"
+                                materialDesign:HintAssist.Hint="Choose DB">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding DataBaseChangedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </StackPanel>
 
-                <!--#endregion-->
-                <!--#region SELECT -->
-                <Label Grid.Column="1" Grid.Row="0" Content="Select" Margin="10 0"/>
+                <StackPanel Grid.Column="0" Grid.Row="1" Margin="10 0 10 0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox x:Name="ChooseTableChecked" IsChecked="True" Margin="0,0,0,8" Content="Enabled" />
+                        <!--Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Grid.Column="1" Command="{Binding ClearComboBoxSelectedCommnad}"/-->
+                    </Grid>
+                    <ComboBox Style="{StaticResource MaterialDesignFilledComboBox}" 
+                                SelectedItem="{Binding Path=FromTableSelected , Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.TableNames}"                
+                                IsEnabled="{Binding Path=IsChecked, ElementName=ChooseTableChecked}"
+                                materialDesign:HintAssist.Hint="Choose Table">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding TableChangedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Grid.Row="0" Margin="10 0 10 10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox x:Name="PrimeSelectTableSelected" IsChecked="True" Margin="0,0,0,8" Content="Enabled" />
+                        <!--Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Grid.Column="1" Command="{Binding ClearComboBoxSelectedCommnad}"/-->
+                    </Grid>
+                    <ComboBox Style="{StaticResource MaterialDesignFilledComboBox}" 
+                                SelectedItem="{Binding Path=FromColumnSelectedPrime , Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnNamePrime}"                
+                                IsEnabled="{Binding Path=IsChecked, ElementName=PrimeSelectTableSelected}"
+                                materialDesign:HintAssist.Hint="Select Item">
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Grid.Row="1" Margin="10 0 10 0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox x:Name="SecondSelectTableSelected" IsChecked="False" Margin="0,0,0,8" Content="Enabled" />
+                        <!--Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Grid.Column="1" Command="{Binding ClearComboBoxSelectedCommnad}"/-->
+                    </Grid>
+                    <ComboBox Style="{StaticResource MaterialDesignFilledComboBox}" 
+                                SelectedItem="{Binding Path=FromColumnSelectedSecond , Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnName}"                
+                                IsEnabled="{Binding Path=IsChecked, ElementName=SecondSelectTableSelected}"
+                                materialDesign:HintAssist.Hint="Select Second Item">
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Grid.Row="2" Margin="10 10 10 0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox x:Name="ThirdSelectTableSelected" IsChecked="False" Margin="0,0,0,8" Content="Enabled" />
+                        <!--Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Grid.Column="1" Command="{Binding ClearComboBoxSelectedCommnad}"/-->
+                    </Grid>
+                    <ComboBox Style="{StaticResource MaterialDesignFilledComboBox}" 
+                                SelectedItem="{Binding Path=FromColumnSelectedThird , Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnName}"                
+                                IsEnabled="{Binding Path=IsChecked, ElementName=ThirdSelectTableSelected}"
+                                materialDesign:HintAssist.Hint="Select Third Item">
+                    </ComboBox>
+                </StackPanel>
 
 
-                <Grid Grid.Column="1" Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Grid.Column="0"  Content="AND" Margin="10 0"/>
-                    <!--" CheckBox Grid.Column="1" x:Name="SelectSecondItem" Content="Use" VerticalAlignment="Center"  /-->
-                </Grid>
-
-
-
-                <Grid Grid.Column="1" Grid.Row="4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Grid.Column="0"  Content="AND" Margin="10 0"/>
-                    <!--" CheckBox Grid.Column="1" x:Name="SelectThirdItem" Content="Use" VerticalAlignment="Center"/-->
-                </Grid>
-
-                <ComboBox Grid.Column="1" Grid.Row="1" Margin="10 0 10 0" x:Name="FromColumnSelectedPrime" SelectedItem="{Binding Path=FromColumnSelectedPrime , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnNamePrime}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseRightButtonDown" >
-                            <i:InvokeCommandAction Command="{Binding ClearComboBoxSelected}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ComboBox>
-                <ComboBox Grid.Column="1" Grid.Row="3" Margin="10 0 10 0" x:Name="ComboBoxSelectSecond" IsHitTestVisible="{Binding SecondSelectedIsAvalible}" IsEnabled="{Binding SecondSelectedIsAvalible}" SelectedItem="{Binding Path=FromColumnSelectedSecond , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnName}">
-                </ComboBox>
-                <ComboBox Grid.Column="1" Grid.Row="5" Margin="10 0 10 0" x:Name="ComboBoxSelectThird" SelectedItem="{Binding Path=FromColumnSelectedThird , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnName}"></ComboBox>
                 <!--#endregion-->
                 <!--#region WHERE -->
+                <StackPanel Grid.Column="2" Grid.Row="0" Margin="10 0 10 0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox x:Name="WhereSelected" IsChecked="True" Margin="0,0,0,8" Content="Enabled" />
+                        <!--Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Grid.Column="1" Command="{Binding ClearComboBoxSelectedCommnad}"/-->
+                    </Grid>
+                    <ComboBox Style="{StaticResource MaterialDesignFilledComboBox}" 
+                                SelectedItem="{Binding Path=FromWhereSelected , Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnName}"                
+                                IsEnabled="{Binding Path=IsChecked, ElementName=WhereSelected}"
+                                materialDesign:HintAssist.Hint="Where Item">
+                    </ComboBox>
+                </StackPanel>
 
 
-                <Grid Grid.Column="2" Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Grid.Column="0"  Content="Where" Margin="10 0"/>
-                </Grid>
-
-                <ComboBox Grid.Column="2" Grid.Row="1" Margin="10 0 10 0" SelectedItem="{Binding Path=FromWhereSelected ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnName}"></ComboBox>
                 <!--#endregion-->
 
                 <!--Compare type-->
                 <!--#region Compare type -->
-                <Label Grid.Column="3" Grid.Row="0" Content="Compare type" Margin="10 0"/>
-                <Label Grid.Column="3" Grid.Row="2" Content="Input" Margin="10 0"/>
-                <Label Grid.Column="3" Grid.Row="4" Content="Between Second" Margin="10 0"/>
 
-                <TextBox Grid.Column="3" Grid.Row="3" Style="{StaticResource TextBoxStyleTemplate}"  Text="{Binding CompareInput}"/>
-                <TextBox Grid.Column="3" Grid.Row="5" Style="{StaticResource TextBoxStyleTemplate}"  Text="{Binding BetweenInput}"/>
+                <StackPanel Grid.Column="3" Grid.Row="0" Margin="10 0 10 0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox x:Name="CompareSelected" IsChecked="True" Margin="0,0,0,8" Content="Enabled" />
+                        <!--Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Grid.Column="1" Command="{Binding ClearComboBoxSelectedCommnad}"/-->
+                    </Grid>
+                    <ComboBox Style="{StaticResource MaterialDesignFilledComboBox}" 
+                                SelectedItem="{Binding Path=CompareTypeSelected , Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.CompareType}"                
+                                IsEnabled="{Binding Path=IsChecked, ElementName=CompareSelected}"
+                                materialDesign:HintAssist.Hint="Where Item">
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Column="3" Grid.Row="1" Margin="10 10 10 0">
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" 
+                             VerticalAlignment="Top"
+                             materialDesign:HintAssist.Hint="Input"
+                             Text="{Binding CompareInput ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="3" Grid.Row="2" Margin="10 10 10 0">
+                    <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" 
+                             VerticalAlignment="Top"
+                             materialDesign:HintAssist.Hint="Between"
+                             Text="{Binding BetweenInput ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
 
 
-                <ComboBox Grid.Column="3" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxCompareType" SelectedItem="{Binding Path=CompareTypeSelected , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.CompareType}"></ComboBox>
                 <!--#endregion-->
 
                 <!--Sort by-->
-                <Label Grid.Column="4" Grid.Row="0" Content="Sort By" Margin="10 0"/>
-                <ComboBox Grid.Column="4" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxSort" SelectedItem="{Binding Path=SortBySelected , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnName}"></ComboBox>
 
-                <!--Order by-->
-                <Label Grid.Column="5" Grid.Row="0" Content="Order By" Margin="10 0"/>
-                <ComboBox Grid.Column="5" Grid.Row="1" Margin="10 0 10 0" x:Name="ComboBoxOrder" SelectedItem="{Binding Path=OrderBySelected , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.OrderBy}"></ComboBox>
+                <StackPanel Grid.Column="4" Grid.Row="0" Margin="10 0 10 0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox x:Name="SortBySelected" IsChecked="True" Margin="0,0,0,8" Content="Enabled" />
+                        <!--Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Grid.Column="1" Command="{Binding ClearComboBoxSelectedCommnad}"/-->
+                    </Grid>
+                    <ComboBox Style="{StaticResource MaterialDesignFilledComboBox}" 
+                                SelectedItem="{Binding Path=SortBySelected , Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.ColumnName}"                
+                                IsEnabled="{Binding Path=IsChecked, ElementName=SortBySelected}"
+                                materialDesign:HintAssist.Hint="Sort By">
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Grid.Column="5" Grid.Row="0" Margin="10 0 10 0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox x:Name="OrderBySelected" IsChecked="True" Margin="0,0,0,8" Content="Enabled" />
+                        <!--Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Grid.Column="1" Command="{Binding ClearComboBoxSelectedCommnad}"/-->
+                    </Grid>
+                    <ComboBox Style="{StaticResource MaterialDesignFilledComboBox}" 
+                                SelectedItem="{Binding Path=OrderBySelected , Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.OrderBy}"                
+                                IsEnabled="{Binding Path=IsChecked, ElementName=OrderBySelected}"
+                                materialDesign:HintAssist.Hint="Order By">
+                    </ComboBox>
+                </StackPanel>
+
 
             </Grid>
             <!--#endregion-->
 
 
-            <Expander Grid.Column="0" Header="Manual Query Command" FontWeight="Bold" Margin="10 10">
+            <Expander Grid.Column="0" Header="Manual Query Command" FontWeight="Bold" Margin="10 0 0 10">
                 <Grid VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBox Grid.Column="0" Height="25" Style="{StaticResource TextBoxStyleTemplate}" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"  Text="{Binding ManualQueryInput}"/>
-                    <Button  Content="Execute" Grid.Column="1" Style="{StaticResource RoundButtonTemplate}" Command="{Binding ExecuteQueryManualCommand}"  Margin="10 0 10 0" Background="red" FontWeight="Bold"/>
+                    <StackPanel Grid.Column="0" Margin="10">
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" 
+                             VerticalAlignment="Top"
+                             materialDesign:HintAssist.Hint="Manual Query"
+                             Text="{Binding ManualQueryInput ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+
+                    <Grid Grid.Column="1" Width="124" >
+                        <Button
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Height="40"
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            Background="White"
+                            Foreground="Black"
+                        Command="{Binding ExecuteQueryManualCommand}">
+                            <TextBlock Text="Execute" />
+                        </Button>
+                    </Grid>
+
+
+                    <!--<TextBox Grid.Column="0" Height="25" Style="{StaticResource TextBoxStyleTemplate}" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"  Text="{Binding ManualQueryInput}"/>-->
+                    <!--<Button  Content="Execute" Grid.Column="1" Style="{StaticResource RoundButtonTemplate}" Command="{Binding ExecuteQueryManualCommand}"  Margin="10 0 10 0" Background="red" FontWeight="Bold"/>-->
                 </Grid>
             </Expander>
 
@@ -198,7 +314,7 @@
             <!--#region Output table -->
             <TextBlock Text="Output" FontWeight="Bold" Margin="10 10"/>
 
-            <DataGrid x:Name="dataGrid" CanUserAddRows="False" MinHeight="150" MaxHeight="150" ItemsSource="{Binding QueryData}" AutoGenerateColumns="True" Margin="10 0 10 10"/>
+            <DataGrid  CanUserAddRows="False"  MinHeight="150" MaxHeight="400" ItemsSource="{Binding QueryData}" AutoGenerateColumns="True" Margin="10 0 10 10"/>
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -206,15 +322,44 @@
                     <ColumnDefinition Width="150" />
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <Button Content="Export CSV" Style="{StaticResource RoundButtonTemplate}" Command="{Binding SaveCsvFileCommand}" Grid.Column="1" Margin="0 10 10 0" FontWeight="Bold"/>
-                <Button Content="Execute Query" Style="{StaticResource RoundButtonTemplate}" Command="{Binding ExecuteQueryCommand}" Grid.Column="2" Margin="0 10 10 0" Background="red" FontWeight="Bold"/>
-                <Button Content="Get last Data" Style="{StaticResource RoundButtonTemplate}" Command="{Binding GetLastResultCommand}" Grid.Column="3" Margin="0 10 10 0" Background="red" FontWeight="Bold"/>
-                <Button Content="Clear Table" Style="{StaticResource RoundButtonTemplate}"  Grid.Column="4" Margin="0 10 10 0" x:Name="ClearTable"/>
+
+                <Grid Grid.Column="1" Width="124">
+                    <Button
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Height="40"
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                        Command="{Binding SaveCsvFileCommand}">
+                        <TextBlock Text="Export CSV" />
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Column="2" Width="124">
+                    <Button
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Height="40"
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            Background="White"
+                            Foreground="Black"
+                        Command="{Binding ExecuteQueryCommand}">
+                        <TextBlock Text="Execute query" />
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Column="3" Width="124">
+                    <Button
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Height="40"
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            Background="White"
+                            Foreground="Black"
+                        Command="{Binding GetLastResultCommand}">
+                        <TextBlock Text="Get last data" />
+                    </Button>
+                </Grid>
             </Grid>
             <!--#endregion-->
         </StackPanel>

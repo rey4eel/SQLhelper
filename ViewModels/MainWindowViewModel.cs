@@ -21,7 +21,9 @@ namespace KYSQLhelper.ViewModels
         private LogData _log = new LogData();
         private DataTable _queryData = new DataTable();
         private string _Title = "SQLhelper";
+        private string _connectionStatus = "Offline";
         private string _compareInput;
+        private string _betweenInput;
         private Brush _ConnectionBtnColor = Brushes.Gray;
         private bool _secondSelectedIsAvalible = true;
         private string _manualQueryInput;
@@ -47,10 +49,20 @@ namespace KYSQLhelper.ViewModels
             get => _Title;
             set => Set(ref _Title, value);
         }
+        public string ConnectionStatus
+        {
+            get => _connectionStatus;
+            set => Set(ref _connectionStatus, value);
+        }
         public string CompareInput
         {
             get => _compareInput;
             set => Set(ref _compareInput, value);
+        }
+        public string BetweenInput
+        {
+            get => _betweenInput;
+            set => Set(ref _betweenInput, value);
         }
         public Brush ConnectionBtnColor
         {
@@ -170,8 +182,8 @@ namespace KYSQLhelper.ViewModels
 
             if (DataBaseModel.IsConnected)
             {
+                ConnectionStatus = "Online";
                 ConnectionBtnColor = Brushes.Green;
-
                 log.ConnectSuccess();
 
                 string query = "select name from sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb','KY_CodeLib');";
@@ -236,6 +248,8 @@ namespace KYSQLhelper.ViewModels
 
             string query = string.Format("SELECT TOP 1 * FROM {0}.dbo.{1}", FromSelected, FromTableSelected);
 
+            log.QueryExecuteSuccess(query);
+
             DataTable SqlResponce = DataBaseModel.ExecuteQuery(query);
 
             for (int i = 0; i < SqlResponce.Columns.Count; i++)
@@ -268,6 +282,7 @@ namespace KYSQLhelper.ViewModels
             {
                 case "EQUAL": compareSign = "="; break;
                 case "LIKE": compareSign = " " + "LIKE"; compareInput = string.Format("%{0}%", compareInput); break;
+                case "BETWEEN": compareSign = " " + "BETWEEN" + " ";compareInput = string.Format("{0}\' AND \'{1}",CompareInput,BetweenInput); break;
             }
 
             query = string.Format("SELECT {0} ", selectType);
@@ -292,6 +307,7 @@ namespace KYSQLhelper.ViewModels
             if (!string.IsNullOrWhiteSpace(OrderBySelected))
                 query += " " + OrderBySelected;
 
+            log.StatusDetails = query;
 
             QueryData = DataBaseModel.ExecuteQuery(query);        
         }
@@ -337,6 +353,7 @@ namespace KYSQLhelper.ViewModels
             }
 
             string path = @"C:\Users\vardan.saakian\Desktop\sqlData.csv";
+            log.StatusDetails = path;
 
             File.WriteAllText(path, sb.ToString());
 
@@ -351,7 +368,8 @@ namespace KYSQLhelper.ViewModels
         }
         private void OnClearComboBoxSelectedCommnadExecute(object p)
         {
-
+            Debug.Print("sdsd");
+            FromSelected = string.Empty;
         }
         #endregion
 

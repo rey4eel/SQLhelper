@@ -27,3 +27,8 @@ C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\Microsoft.Expression.
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\System.Windows.Interactivity.dll
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\Microsoft.Expression.Interactions.xml
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\System.Windows.Interactivity.xml
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\MaterialDesignColors.dll
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\MaterialDesignThemes.Wpf.dll
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\MaterialDesignColors.pdb
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\MaterialDesignThemes.Wpf.pdb
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\MaterialDesignThemes.Wpf.xml
