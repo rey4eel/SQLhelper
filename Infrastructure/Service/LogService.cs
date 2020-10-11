@@ -69,15 +69,27 @@ namespace KYSQLhelper.Models
             StatusDetails = "Check the Credentials = Connection Failed";
         }
 
+        public void ExportSuccess(string exportPath)
+        {
+            Status = "Done";
+            StatusDetails = "File saved in:" + exportPath;
+        }
+
+        public void ExportFail()
+        {
+            Status = "Error";
+            StatusDetails = "No data to export create table first";
+        }
+
         public void QueryExecuteSuccess(string query)
         {
             Status = "Executed";
             StatusDetails = $"Execute query => {query}";
         }
 
-        private void QueryExecuteFail(object source,ExceptionEventArgs args)
+        private void QueryExecuteFail(Exception ex)
         {
-            StatusDetails = "Errorsdsds";
+            StatusDetails = ex.Message;
         }
 
     }

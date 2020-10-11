@@ -27,3 +27,8 @@ C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Release\System.Windows.Inte
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Release\Views\Windows\MainWindow.g.cs
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Release\GeneratedInternalTypeHelper.g.cs
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Release\Views\Windows\MainWindow.baml
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Release\MaterialDesignColors.dll
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Release\MaterialDesignThemes.Wpf.dll
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Release\MaterialDesignColors.pdb
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Release\MaterialDesignThemes.Wpf.pdb
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Release\MaterialDesignThemes.Wpf.xml

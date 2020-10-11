@@ -12,6 +12,8 @@ using System.Diagnostics;
 
 namespace KYSQLhelper.Models 
 {
+    public delegate void ExceptionDelegate(string exception);
+
     class ExceptionEventArgs : EventArgs
     {
         public Exception Exception { get; set; }
@@ -21,10 +23,10 @@ namespace KYSQLhelper.Models
 
         private ObservableCollection<string> _dbNames = new ObservableCollection<string>();
         private ObservableCollection<string> _tableNames = new ObservableCollection<string>();
-        private ObservableCollection<string> _columnNamePrime = new ObservableCollection<string>() { "ALL" };
-        private ObservableCollection<string> _compareType = new ObservableCollection<string>() { "LIKE", "BETWEEN", "EQUAL" };
+        private ObservableCollection<string> _columnNamePrime = new ObservableCollection<string>() {"ALL"};
+        private ObservableCollection<string> _compareType = new ObservableCollection<string>() {"LIKE","BETWEEN","EQUAL"};
         private ObservableCollection<string> _columnName = new ObservableCollection<string>();
-        private ObservableCollection<string> _orderBy = new ObservableCollection<string>() { "ASC", "DESC" };
+        private ObservableCollection<string> _orderBy = new ObservableCollection<string>() {"ASC","DESC"};
         private bool _IsConnected = false;
         private string _connectionString;
         private string _ipAdress;

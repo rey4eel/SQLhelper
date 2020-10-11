@@ -2,6 +2,7 @@
 using KYSQLhelper.Infrastructure.Service;
 using KYSQLhelper.Models;
 using KYSQLhelper.ViewModels.Base;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -248,8 +249,6 @@ namespace KYSQLhelper.ViewModels
 
             string query = string.Format("SELECT TOP 1 * FROM {0}.dbo.{1}", FromSelected, FromTableSelected);
 
-            log.QueryExecuteSuccess(query);
-
             DataTable SqlResponce = DataBaseModel.ExecuteQuery(query);
 
             for (int i = 0; i < SqlResponce.Columns.Count; i++)
@@ -257,6 +256,8 @@ namespace KYSQLhelper.ViewModels
                 DataBaseModel.ColumnNamePrime.Add(SqlResponce.Columns[i].ColumnName);
                 DataBaseModel.ColumnName.Add(SqlResponce.Columns[i].ColumnName);
             }
+
+            log.QueryExecuteSuccess(query);
         }
         #endregion
 
@@ -307,9 +308,10 @@ namespace KYSQLhelper.ViewModels
             if (!string.IsNullOrWhiteSpace(OrderBySelected))
                 query += " " + OrderBySelected;
 
-            log.StatusDetails = query;
+            
+            QueryData = DataBaseModel.ExecuteQuery(query);
 
-            QueryData = DataBaseModel.ExecuteQuery(query);        
+            log.QueryExecuteSuccess(query);
         }
 
         #endregion
@@ -326,7 +328,11 @@ namespace KYSQLhelper.ViewModels
             if (QueryData.Rows.Count > 0)
                 QueryData.Clear();
 
-            QueryData = DataBaseModel.ExecuteQuery("SELECT TOP 1 * FROM KY_AOI.dbo.TB_AOIPCB ORDER BY StartDateTime DESC");
+            string lastDataQuery = "SELECT TOP 1 * FROM KY_AOI.dbo.TB_AOIPCB ORDER BY StartDateTime DESC";
+
+            QueryData = DataBaseModel.ExecuteQuery(lastDataQuery);
+
+            log.QueryExecuteSuccess(lastDataQuery);
         }
         #endregion
 
@@ -339,6 +345,12 @@ namespace KYSQLhelper.ViewModels
         private void OnSaveCsvFileCommandExecute(object p)
         {
 
+            if (QueryData.Rows.Count == 0)
+            {
+                log.ExportFail();
+                return;
+            }
+
             StringBuilder sb = new StringBuilder();
 
             IEnumerable<string> columnNames = QueryData.Columns.Cast<DataColumn>().
@@ -348,14 +360,16 @@ namespace KYSQLhelper.ViewModels
 
             foreach (DataRow row in QueryData.Rows)
             {
-            IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString());
-            sb.AppendLine(string.Join(",", fields));
+                IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString());
+                sb.AppendLine(string.Join(",", fields));
             }
 
-            string path = @"C:\Users\vardan.saakian\Desktop\sqlData.csv";
-            log.StatusDetails = path;
+            string desctopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string path = string.Format("{0}\\sqlData.csv",desctopPath);
 
             File.WriteAllText(path, sb.ToString());
+
+            log.ExportSuccess(path);
 
         }
         #endregion
@@ -368,8 +382,7 @@ namespace KYSQLhelper.ViewModels
         }
         private void OnClearComboBoxSelectedCommnadExecute(object p)
         {
-            Debug.Print("sdsd");
-            FromSelected = string.Empty;
+
         }
         #endregion
 
@@ -385,6 +398,8 @@ namespace KYSQLhelper.ViewModels
                 QueryData.Clear();
 
             QueryData = DataBaseModel.ExecuteQuery(ManualQueryInput);
+
+            log.QueryExecuteSuccess(ManualQueryInput);
         }
         #endregion
 

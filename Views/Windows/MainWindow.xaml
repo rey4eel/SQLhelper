@@ -6,8 +6,7 @@
         xmlns:vm="clr-namespace:KYSQLhelper.ViewModels"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
-        xmlns:local="clr-namespace:KYSQLhelper"
-        
+        xmlns:local="clr-namespace:KYSQLhelper"  
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -220,7 +219,7 @@
                     <ComboBox Style="{StaticResource MaterialDesignFilledComboBox}" 
                                 SelectedItem="{Binding Path=CompareTypeSelected , Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataBaseModel.CompareType}"                
                                 IsEnabled="{Binding Path=IsChecked, ElementName=CompareSelected}"
-                                materialDesign:HintAssist.Hint="Where Item">
+                                materialDesign:HintAssist.Hint="Compare">
                     </ComboBox>
                 </StackPanel>
                 <StackPanel Grid.Column="3" Grid.Row="1" Margin="10 10 10 0">
@@ -304,9 +303,6 @@
                         </Button>
                     </Grid>
 
-
-                    <!--<TextBox Grid.Column="0" Height="25" Style="{StaticResource TextBoxStyleTemplate}" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"  Text="{Binding ManualQueryInput}"/>-->
-                    <!--<Button  Content="Execute" Grid.Column="1" Style="{StaticResource RoundButtonTemplate}" Command="{Binding ExecuteQueryManualCommand}"  Margin="10 0 10 0" Background="red" FontWeight="Bold"/>-->
                 </Grid>
             </Expander>
 
