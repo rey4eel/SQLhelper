@@ -95,7 +95,6 @@ namespace KYSQLhelper.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
-
         protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
         {
             if (Equals(field, value))
@@ -104,9 +103,7 @@ namespace KYSQLhelper.Models
             OnPropertyChanged(PropertyName);
             return true;
         }
-
         public delegate void SqlExceptionEventHandler(object source, ExceptionEventArgs args);
-
         public event SqlExceptionEventHandler ExceptionCatched;
 
         public DataBaseModel()
