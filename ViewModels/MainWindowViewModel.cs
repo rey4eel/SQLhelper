@@ -178,36 +178,41 @@ namespace KYSQLhelper.ViewModels
         {
             if (DataBaseModel.DbNames.Count > 0)
                 DataBaseModel.DbNames.Clear();
-
-            DataBaseModel.CheckConnection();
-
-            if (DataBaseModel.IsConnected)
+            try
             {
-                ConnectionStatus = "Online";
-                ConnectionBtnColor = Brushes.Green;
-                log.ConnectSuccess();
-
-                string query = "select name from sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb','KY_CodeLib');";
-
-                DataTable SqlResponce = DataBaseModel.ExecuteQuery(query);
-
-                for (int i = 0; i < SqlResponce.Rows.Count; i++)
+                DataBaseModel.CheckConnection();
+                if (DataBaseModel.IsConnected)
                 {
-                    DataBaseModel.DbNames.Add(SqlResponce.Rows[i]["name"].ToString());
+                    ConnectionStatus = "Online";
+                    ConnectionBtnColor = Brushes.Green;
+                    log.ConnectSuccess();
+
+                    string query = "select name from sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb','KY_CodeLib');";
+
+                    DataTable SqlResponce = DataBaseModel.ExecuteQuery(query);
+
+                    for (int i = 0; i < SqlResponce.Rows.Count; i++)
+                    {
+                        DataBaseModel.DbNames.Add(SqlResponce.Rows[i]["name"].ToString());
+                    }
+                }
+                else
+                {
+                    log.ConnectFail();
+                    ConnectionBtnColor = Brushes.Gray;
+                    ConnectionStatus = "Offline";
+
+                    if (DataBaseModel.DbNames.Count > 0)
+                    {
+                        DataBaseModel.DbNames.Clear();
+                        FromSelected = string.Empty;
+                    }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                log.ConnectFail();
-                ConnectionBtnColor = Brushes.Gray;
-                if (DataBaseModel.DbNames.Count > 0)
-                {
-                    DataBaseModel.DbNames.Clear();
-                    FromSelected = string.Empty;
-                }
-
+                log.ConnectFail(ex);
             }
-
         }
 
         #endregion

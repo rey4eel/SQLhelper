@@ -68,6 +68,11 @@ namespace KYSQLhelper.Models
             Status = "Error";
             StatusDetails = "Check the Credentials = Connection Failed";
         }
+        public void ConnectFail(Exception ex)
+        {
+            Status = "Error";
+            StatusDetails = ex.Message;
+        }
 
         public void ExportSuccess(string exportPath)
         {

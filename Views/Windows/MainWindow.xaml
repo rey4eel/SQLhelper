@@ -310,7 +310,10 @@
             <!--#region Output table -->
             <TextBlock Text="Output" FontWeight="Bold" Margin="10 10"/>
 
-            <DataGrid  CanUserAddRows="False"  MinHeight="150" MaxHeight="400" ItemsSource="{Binding QueryData}" AutoGenerateColumns="True" Margin="10 0 10 10"/>
+            <DataGrid  CanUserAddRows="False"  MinHeight="150" MaxHeight="400" 
+                       ItemsSource="{Binding QueryData}" AutoGenerateColumns="True" 
+                       Margin="10 0 10 10" 
+                       EnableRowVirtualization="True" />
 
             <Grid>
                 <Grid.ColumnDefinitions>
