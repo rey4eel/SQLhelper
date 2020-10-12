@@ -37,17 +37,14 @@ namespace KYSQLhelper.Models
 
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         public LogData()
         {
             
         }
-
         protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
-
         protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
         {
             if (Equals(field, value))
@@ -56,13 +53,11 @@ namespace KYSQLhelper.Models
             OnPropertyChanged(PropertyName);
             return true;
         }
-
         public void ConnectSuccess()
         {
             Status = "Connected";
             StatusDetails = string.Empty;
         }
-
         public void ConnectFail()
         {
             Status = "Error";
@@ -73,25 +68,21 @@ namespace KYSQLhelper.Models
             Status = "Error";
             StatusDetails = ex.Message;
         }
-
         public void ExportSuccess(string exportPath)
         {
             Status = "Done";
             StatusDetails = "File saved in:" + exportPath;
         }
-
         public void ExportFail()
         {
             Status = "Error";
             StatusDetails = "No data to export create table first";
         }
-
         public void QueryExecuteSuccess(string query)
         {
             Status = "Executed";
             StatusDetails = $"Execute query => {query}";
         }
-
         private void QueryExecuteFail(Exception ex)
         {
             StatusDetails = ex.Message;
