@@ -1,6 +1,7 @@
 ﻿using KYSQLhelper.Infrastructure.Commands;
 using KYSQLhelper.Infrastructure.Service;
 using KYSQLhelper.Models;
+using KYSQLhelper.Resourse.query;
 using KYSQLhelper.ViewModels.Base;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace KYSQLhelper.ViewModels
 {
     class MainWindowViewModel : ViewModel
     {
+        private DataTable _dataBaseInfo = new DataTable();
         private DataBaseModel _dataBaseModel = new DataBaseModel();
         private LogData _log = new LogData();
         private DataTable _queryData = new DataTable();
@@ -33,7 +35,11 @@ namespace KYSQLhelper.ViewModels
         private string _dataSourceType;
         private string _dataSourceReference;
 
-
+        public DataTable DataBaseInfo
+        {
+            get { return _dataBaseInfo; }
+            set => Set(ref _dataBaseInfo, value);
+        }
         public DataBaseModel DataBaseModel
         {
             get { return _dataBaseModel; }
@@ -200,6 +206,8 @@ namespace KYSQLhelper.ViewModels
                     ConnectionStatus = "Online";
                     ConnectionBtnColor = Brushes.Green;
                     log.ConnectSuccess();
+
+                    DataBaseInfo = DataBaseModel.ExecuteQuery(DbInfoQuery.DbInfo);
 
                     string query = "select name from sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb','KY_CodeLib');";
 

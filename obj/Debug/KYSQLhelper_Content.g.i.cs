@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sqlicon.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resourse/query/dbinfoquery.txt")]
 
 
