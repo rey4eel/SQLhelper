@@ -27,6 +27,7 @@ namespace KYSQLhelper.Models
         private ObservableCollection<string> _compareType = new ObservableCollection<string>() {"LIKE","BETWEEN","EQUAL"};
         private ObservableCollection<string> _columnName = new ObservableCollection<string>();
         private ObservableCollection<string> _orderBy = new ObservableCollection<string>() {"ASC","DESC"};
+        private ObservableCollection<string> _exportType = new ObservableCollection<string>() {"PCBGUID","BARCODE","RECENT"};
         private bool _IsConnected = false;
         private string _connectionString;
         private string _ipAdress;
@@ -77,6 +78,11 @@ namespace KYSQLhelper.Models
         {
             get { return _orderBy; }
             set => Set(ref _orderBy, value);
+        }
+        public ObservableCollection<string> ExportType
+        {
+            get { return _exportType; }
+            set => Set(ref _exportType, value);
         }
         public string ConnectionString
         {

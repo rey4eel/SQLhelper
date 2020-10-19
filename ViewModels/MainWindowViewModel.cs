@@ -10,7 +10,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -28,6 +30,8 @@ namespace KYSQLhelper.ViewModels
         private Brush _ConnectionBtnColor = Brushes.Gray;
         private bool _secondSelectedIsAvalible = true;
         private string _manualQueryInput;
+        private string _dataSourceType;
+        private string _dataSourceReference;
 
 
         public DataBaseModel DataBaseModel
@@ -79,6 +83,16 @@ namespace KYSQLhelper.ViewModels
         {
             get { return _manualQueryInput; }
             set => Set(ref _manualQueryInput, value);
+        }
+        public string DataSourceType
+        {
+            get { return _dataSourceType; }
+            set => Set(ref _dataSourceType, value);
+        }
+        public string DataSourceReference
+        {
+            get { return _dataSourceReference; }
+            set => Set(ref _dataSourceReference, value);
         }
 
         #region ComBoxFromTableSelectedvalue
@@ -317,6 +331,7 @@ namespace KYSQLhelper.ViewModels
             QueryData = DataBaseModel.ExecuteQuery(query);
 
             log.QueryExecuteSuccess(query);
+            log.DataTableInfo = string.Format("Total Row:{0} |Total Column:{1}", QueryData.Rows.Count, QueryData.Columns.Count);
         }
 
         #endregion
@@ -387,7 +402,11 @@ namespace KYSQLhelper.ViewModels
         }
         private void OnClearComboBoxSelectedCommnadExecute(object p)
         {
-
+            ComboBox objdata = (ComboBox)p;
+            string value = null;
+            PropertyInfo propertyInfo = this.GetType().GetProperty(objdata.Name);
+            propertyInfo.SetValue(this, Convert.ChangeType(value, propertyInfo.PropertyType), null);
+            
         }
         #endregion
 

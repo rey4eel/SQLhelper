@@ -15,6 +15,7 @@ namespace KYSQLhelper.Models
     {
 
         private string _status;
+        private string _dataTableInfo;
         private string _statusDetails;
         private int _progressBar = 0;
 
@@ -23,6 +24,11 @@ namespace KYSQLhelper.Models
         {
             get { return _status; }
             set => Set(ref _status, value);
+        }
+        public string DataTableInfo
+        {
+            get { return _dataTableInfo; }
+            set => Set(ref _dataTableInfo, value);
         }
         public string StatusDetails
         {
