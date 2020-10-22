@@ -1,7 +1,6 @@
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\KYSQLhelper.exe.config
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\KYSQLhelper.exe
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\KYSQLhelper.pdb
-C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.csprojAssemblyReference.cache
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\App.g.cs
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper_MarkupCompile.cache
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper_MarkupCompile.lref
@@ -32,3 +31,4 @@ C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\MaterialDesignThemes.
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\MaterialDesignColors.pdb
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\MaterialDesignThemes.Wpf.pdb
 C:\Users\vardan.saakian\source\repos\KYSQLhelper\bin\Debug\MaterialDesignThemes.Wpf.xml
+C:\Users\vardan.saakian\source\repos\KYSQLhelper\obj\Debug\KYSQLhelper.csprojAssemblyReference.cache
