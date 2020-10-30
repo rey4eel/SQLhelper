@@ -21,6 +21,7 @@ namespace KYSQLhelper.ViewModels
 {
     class MainWindowViewModel : ViewModel
     {
+        #region Private Property
         private DataTable _dataBaseInfo = new DataTable();
         private DataBaseModel _dataBaseModel = new DataBaseModel();
         private LogData _log = new LogData();
@@ -34,7 +35,9 @@ namespace KYSQLhelper.ViewModels
         private string _manualQueryInput;
         private string _dataSourceType;
         private string _dataSourceReference;
+        #endregion
 
+        #region MainWindow Resourses
         public DataTable DataBaseInfo
         {
             get { return _dataBaseInfo; }
@@ -80,11 +83,6 @@ namespace KYSQLhelper.ViewModels
             get { return _ConnectionBtnColor; }
             set => Set(ref _ConnectionBtnColor, value);
         }
-        public bool SecondSelectedIsAvalible
-        {
-            get { return _secondSelectedIsAvalible; }
-            set => Set(ref _secondSelectedIsAvalible, value);
-        }
         public string ManualQueryInput
         {
             get { return _manualQueryInput; }
@@ -100,6 +98,7 @@ namespace KYSQLhelper.ViewModels
             get { return _dataSourceReference; }
             set => Set(ref _dataSourceReference, value);
         }
+        #endregion
 
         #region ComBoxFromTableSelectedvalue
 
@@ -109,6 +108,12 @@ namespace KYSQLhelper.ViewModels
         {
             get { return _fromSelected; }
             set => Set(ref _fromSelected, value);
+        }
+
+        public bool SecondSelectedIsAvalible
+        {
+            get { return _secondSelectedIsAvalible; }
+            set => Set(ref _secondSelectedIsAvalible, value);
         }
 
         private string _fromTableSelected;
@@ -194,6 +199,10 @@ namespace KYSQLhelper.ViewModels
         {
             return true;
         }
+        /// <summary>
+        /// Try to connect to SQL DB if success return the DB names.
+        /// </summary>
+        /// <param name="p"></param>
         private void OnSqlConnectCommandExecute(object p)
         {
             if (DataBaseModel.DbNames.Count > 0)
@@ -245,6 +254,10 @@ namespace KYSQLhelper.ViewModels
         {
             return true;
         }
+        /// <summary>
+        /// Based on selected DB load correct Table list
+        /// </summary>
+        /// <param name="p"></param>
         private void OnDataBaseChangedCommandExecute(object p)
         {
             if (DataBaseModel.TableNames.Count > 0)
@@ -294,6 +307,10 @@ namespace KYSQLhelper.ViewModels
         {
             return true;
         }
+        /// <summary>
+        /// Checking the combo box value and create query
+        /// </summary>
+        /// <param name="p"></param>
         private void OnExecuteQueryCommandExecute(object p)
         {
 
@@ -350,6 +367,10 @@ namespace KYSQLhelper.ViewModels
         {
             return true;
         }
+        /// <summary>
+        /// Hardcoded query to get last result from SQL
+        /// </summary>
+        /// <param name="p"></param>
         private void OnGetLastResultCommandExecute(object p)
         {
 
@@ -370,6 +391,10 @@ namespace KYSQLhelper.ViewModels
         {
             return true;
         }
+        /// <summary>
+        /// Save collected data as CSV file on the desctop.
+        /// </summary>
+        /// <param name="p"></param>
         private void OnSaveCsvFileCommandExecute(object p)
         {
 
@@ -408,13 +433,16 @@ namespace KYSQLhelper.ViewModels
         {
             return true;
         }
+        /// <summary>
+        /// Delete currently selected parametr in comboBox
+        /// </summary>
+        /// <param name="p"></param>
         private void OnClearComboBoxSelectedCommnadExecute(object p)
         {
             ComboBox objdata = (ComboBox)p;
             string value = null;
             PropertyInfo propertyInfo = this.GetType().GetProperty(objdata.Name);
             propertyInfo.SetValue(this, Convert.ChangeType(value, propertyInfo.PropertyType), null);
-            
         }
         #endregion
 
@@ -424,6 +452,10 @@ namespace KYSQLhelper.ViewModels
         {
             return true;
         }
+        /// <summary>
+        /// Get the query from the Input field - validation required
+        /// </summary>
+        /// <param name="p"></param>
         private void OnExecuteQueryManualCommandExecute(object p)
         {
             if (QueryData.Rows.Count > 0)
