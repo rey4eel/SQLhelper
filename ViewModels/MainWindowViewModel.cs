@@ -458,6 +458,26 @@ namespace KYSQLhelper.ViewModels
         /// <param name="p"></param>
         private void OnExecuteQueryManualCommandExecute(object p)
         {
+            if (string.IsNullOrWhiteSpace(ManualQueryInput))
+            {
+                log.Status = LogData.StatusMessage.ERROR.ToString();
+                log.StatusDetails = "Empty query";
+                return;
+            }
+
+
+            foreach (var queryType in Enum.GetValues(typeof(DbInfoQuery.NotAllowedQuery)))
+            {
+                if(ManualQueryInput.Contains(queryType.ToString()))
+                {
+                    log.Status = LogData.StatusMessage.ERROR.ToString();
+                    log.StatusDetails = "Not allowed query";
+                    return;
+                }
+
+            }
+
+
             if (QueryData.Rows.Count > 0)
                 QueryData.Clear();
 

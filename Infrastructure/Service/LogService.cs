@@ -13,6 +13,15 @@ namespace KYSQLhelper.Models
 {
     class LogData : INotifyPropertyChanged
     {
+        public enum StatusMessage
+        {
+            ERROR,
+            FAIL,
+            EXCEPTION,
+            SUCCESS,
+            CONNECTED
+        }
+
 
         private string _status;
         private string _dataTableInfo;
