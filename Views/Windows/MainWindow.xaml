@@ -55,9 +55,10 @@
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Margin="10">
                                     <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" 
-                             VerticalAlignment="Top"
-                             materialDesign:HintAssist.Hint="IPadress"
-                             Text="{Binding Path=DataBaseModel.IpAdress ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"/>
+                                        VerticalAlignment="Top"
+                                        materialDesign:HintAssist.Hint="IPadress"     
+                                        Text="{Binding  Path=DataBaseModel.IpAdress ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}">
+                                    </TextBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Margin="10">
                                     <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" 
@@ -461,7 +462,6 @@
                                 <ProgressBar Value="{Binding log.ProgressBar , Mode=TwoWay}" Width="90" Height="16" />
                             </StatusBarItem>
                         </StatusBar>
-
                     </Grid>
                 </ScrollViewer>
             </TabItem.Content>
@@ -472,7 +472,6 @@
             </TabItem.Header>
             <TabItem.Content>
                 <TextBlock Text="I will add here service tools">
-                    
                 </TextBlock>
             </TabItem.Content>
         </TabItem>

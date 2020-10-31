@@ -37,7 +37,13 @@ namespace KYSQLhelper.Models
         public string IpAdress
         {
             get { return _ipAdress; }
-            set => Set(ref _ipAdress, value);
+            set
+            {
+                //if (string.IsNullOrWhiteSpace(value))
+                //    throw new ArgumentException("IP adress cant be empty");
+                //else
+                    Set(ref _ipAdress, value);
+            }
         }
         public string UserName
         {
